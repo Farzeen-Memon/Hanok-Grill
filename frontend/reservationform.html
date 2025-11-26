@@ -1,0 +1,35 @@
+<!Doctype html>
+<title>
+    RESERVATION
+</title>
+<link rel="stylesheet" href="formstyle.css">
+<body>
+    <h2>RESERVATION</h2>
+    <form action="">
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="" placeholder="Enter your Name:"><br><br>
+    <label for="tel">Phone No:</label>
+    <input type="number" name="phoneno" id="" placeholder="Enter your 10 digit number:"required><br><br>
+    <label for="date">Date:</label>
+    <input type="date" name="date" id=""required><br><br>
+    <label for="email">Email Id:</label>
+    <input type="text" name="email" id="" placeholder="Enter your Email:"required><br><br>
+    <label>Guests: <input type="number" name="guests" min="1" max="20" required></label><br><br>
+    <label for="seating">Seating Arrangement:
+    <select name="seating">
+        <option value="indoor">Indoor</option>
+        <option value="outdoor">Outdoor</option>
+        <option value="private">Private</option>
+    </select>
+    </label><br><br>
+    <label>Occasion:
+    <input type="text" name="occasion" placeholder="e.g., Birthday">
+    </label><br><br>
+    <label>Special Requests:
+    <textarea name="special_requests" placeholder="Allergies, accessibility, etc."></textarea>
+    </label><br><br>
+    <button type="submit">Book Now</button>
+</body>
+
+</form>
+</html>

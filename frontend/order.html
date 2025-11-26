@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Now - Hanok Grill</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Order Page Specific Styles */
+    .order-container {
+      display: flex;
+      padding: 20px;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+    .menu {
+      flex: 3;
+      min-width: 300px;
+    }
+    .cart {
+      flex: 1;
+      background: rgba(0,0,0,0.85);
+      padding: 25px;
+      border-radius: 16px;
+      color: white;
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      min-width: 280px;
+    }
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px dashed #555;
+    }
+    .qty-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .qty-btn {
+      width: 30px;
+      height: 30px;
+      background: #e63946;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 1.2em;
+      cursor: pointer;
+    }
+    .qty {
+      font-size: 1.2em;
+      min-width: 30px;
+      text-align: center;
+    }
+    .btn-order {
+      width: 100%;
+      padding: 14px;
+      background: #e63946;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.2em;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    .btn-order:hover {
+      background: #c1121f;
+    }
+    .back-home {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: #93328E;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<a href="index.html" class="back-home">🏠 Home</a>
+
+<div class="order-container">
+  <!-- Menu Section -->
+  <div class="menu">
+    <h2 style="text-align:center; margin-bottom:30px; color:#f9d105;">🍽️ Order Now</h2>
+
+    <!-- Menu Item 1 -->
+    <div class="item">
+      <div>
+        <strong>Bibimbap</strong><br>
+        <span style="color:#ccc;">₹499</span>
+      </div>
+      <div class="qty-control">
+        <button class="qty-btn" onclick="removeItem('bibimbap')">−</button>
+        <span id="bibimbap" class="qty">0</span>
+        <button class="qty-btn" onclick="addItem('bibimbap', 499)">+</button>
+      </div>
+    </div>
+
+    <!-- Menu Item 2 -->
+    <div class="item">
+      <div>
+        <strong>Kimchi Ramen</strong><br>
+        <span style="color:#ccc;">₹399</span>
+      </div>
+      <div class="qty-control">
+        <button class="qty-btn" onclick="removeItem('ramen')">−</button>
+        <span id="ramen" class="qty">0</span>
+        <button class="qty-btn" onclick="addItem('ramen', 399)">+</button>
+      </div>
+    </div>
+
+    <!-- Menu Item 3 -->
+    <div class="item">
+      <div>
+        <strong>Gimbab</strong><br>
+        <span style="color:#ccc;">₹299</span>
+      </div>
+      <div class="qty-control">
+        <button class="qty-btn" onclick="removeItem('gimbab')">−</button>
+        <span id="gimbab" class="qty">0</span>
+        <button class="qty-btn" onclick="addItem('gimbab', 299)">+</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Sidebar -->
+  <div class="cart">
+    <h3>🛒 Your Order</h3>
+    <div id="cart-items"></div>
+    <h4>Total: ₹<span id="total">0</span></h4>
+    <button class="btn-order" onclick="checkout()">💳 Pay Now</button>
+  </div>
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+  let total = 0;
+
+  function addItem(id, price) {
+    const qtyEl = document.getElementById(id);
+    let qty = parseInt(qtyEl.textContent);
+    qty++;
+    qtyEl.textContent = qty;
+    total += price;
+    updateCart();
+  }
+
+  function removeItem(id) {
+    const qtyEl = document.getElementById(id);
+    let qty = parseInt(qtyEl.textContent);
+    if (qty > 0) {
+      qty--;
+      qtyEl.textContent = qty;
+      total -= 499; // Adjust if needed
+      updateCart();
+    }
+  }
+
+  function updateCart() {
+    document.getElementById('total').textContent = total;
+  }
+
+  function checkout() {
+    if (total === 0) {
+      alert("Please add something to order!");
+      return;
+    }
+
+    // Razorpay Payment Options
+    const options = {
+      key: "rzp_test_RX3jjZVra6hFu2",  // ← REPLACE with your actual Test Key ID
+      amount: total * 100,  // amount in paise (₹1 = 100 paise)
+      currency: "INR",
+      name: "Hanok Grill",
+      description: "Food Order Payment",
+      image: "",  // optional: add logo URL
+      handler: function (response) {
+        // Success: Show payment ID
+        alert("✅ Payment Successful!\nPayment ID: " + response.razorpay_payment_id);
+        // Here you can send data to backend later
+      },
+      prefill: {
+        name: "",
+        email: "",
+        contact: "",
+      },
+      theme: {
+        color: "#93328E"
+      },
+      modal: {
+        ondismiss: function () {
+          alert("Payment cancelled.");
+        }
+      }
+    };
+
+    // Open Razorpay Checkout
+    const rzp = new Razorpay(options);
+    rzp.open();
+  }
+</script>
+
+
+</body>
+</html>
