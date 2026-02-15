@@ -1,57 +1,73 @@
 import type { UserPreferences, DishRecommendation } from './types';
 import { getRecommendations } from './api';
 
+interface HanokPicProps {
+  onClose?: () => void;
+}
+
 export class HanokPic {
-    private container: HTMLElement;
-    private currentStep: number = 1;
-    private preferences: Partial<UserPreferences> = {};
-    private recommendations: DishRecommendation[] = [];
+  private container: HTMLElement | null = null;
+  private currentStep: number = 1;
+  private preferences: Partial<UserPreferences> = {};
+  private recommendations: DishRecommendation[] = [];
+  private onCloseCallback?: () => void;
 
-    constructor(containerId: string) {
-        const element = document.getElementById(containerId);
-        if (!element) {
-            throw new Error(`Container with id "${containerId}" not found`);
-        }
-        this.container = element;
+  constructor(props?: HanokPicProps) {
+    this.onCloseCallback = props?.onClose;
+  }
+
+  public open() {
+    this.currentStep = 1;
+    this.preferences = {};
+
+    // Create container if it doesn't exist
+    if (!this.container) {
+      this.container = document.createElement('div');
+      this.container.id = 'hanok-pic-modal-container';
+      document.body.appendChild(this.container);
     }
 
-    public open() {
-        this.currentStep = 1;
-        this.preferences = {};
-        this.render();
+    this.render();
+  }
+
+  public close() {
+    if (this.container) {
+      this.container.innerHTML = '';
+      this.container.style.display = 'none';
+      if (this.onCloseCallback) {
+        this.onCloseCallback();
+      }
     }
+  }
 
-    public close() {
-        this.container.innerHTML = '';
-        this.container.style.display = 'none';
+  private render() {
+    if (!this.container) return;
+    this.container.style.display = 'block';
+
+    switch (this.currentStep) {
+      case 1:
+        this.renderMoodSelection();
+        break;
+      case 2:
+        this.renderPreferenceSelection();
+        break;
+      case 3:
+        this.renderRecommendations();
+        break;
     }
+  }
 
-    private render() {
-        this.container.style.display = 'block';
+  private renderMoodSelection() {
+    if (!this.container) return;
+    const moods = [
+      { value: 'comfort', emoji: '😌', label: 'Comfort', description: 'Warm and cozy dishes' },
+      { value: 'spicy', emoji: '🔥', label: 'Spicy', description: 'Bring the heat!' },
+      { value: 'heavy', emoji: '🥩', label: 'Heavy', description: 'Hearty and filling' },
+      { value: 'light', emoji: '🥗', label: 'Light', description: 'Fresh and easy' },
+      { value: 'sharing', emoji: '🎉', label: 'Sharing', description: 'Perfect for groups' },
+    ];
 
-        switch (this.currentStep) {
-            case 1:
-                this.renderMoodSelection();
-                break;
-            case 2:
-                this.renderPreferenceSelection();
-                break;
-            case 3:
-                this.renderRecommendations();
-                break;
-        }
-    }
-
-    private renderMoodSelection() {
-        const moods = [
-            { value: 'comfort', emoji: '😌', label: 'Comfort', description: 'Warm and cozy dishes' },
-            { value: 'spicy', emoji: '🔥', label: 'Spicy', description: 'Bring the heat!' },
-            { value: 'heavy', emoji: '🥩', label: 'Heavy', description: 'Hearty and filling' },
-            { value: 'light', emoji: '🥗', label: 'Light', description: 'Fresh and easy' },
-            { value: 'sharing', emoji: '🎉', label: 'Sharing', description: 'Perfect for groups' },
-        ];
-
-        this.container.innerHTML = `
+    this.container.innerHTML = `
       <div class="hanok-pic-modal">
         <div class="hanok-pic-content">
           <button class="close-btn" id="close-hanok-pic">&times;</button>
@@ -84,23 +100,24 @@ export class HanokPic {
       </div>
     `;
 
-        // Event listeners
-        document.getElementById('close-hanok-pic')?.addEventListener('click', () => this.close());
+    // Event listeners
+    document.getElementById('close-hanok-pic')?.addEventListener('click', () => this.close());
 
-        document.querySelectorAll('.mood-card').forEach(card => {
-            card.addEventListener('click', (e) => {
-                const mood = (e.currentTarget as HTMLElement).dataset.mood;
-                if (mood) {
-                    this.preferences.mood = mood;
-                    this.currentStep = 2;
-                    this.render();
-                }
-            });
-        });
-    }
+    document.querySelectorAll('.mood-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        const mood = (e.currentTarget as HTMLElement).dataset.mood;
+        if (mood) {
+          this.preferences.mood = mood;
+          this.currentStep = 2;
+          this.render();
+        }
+      });
+    });
+  }
 
-    private renderPreferenceSelection() {
-        this.container.innerHTML = `
+  private renderPreferenceSelection() {
+    if (!this.container) return;
+    this.container.innerHTML = `
       <div class="hanok-pic-modal">
         <div class="hanok-pic-content">
           <button class="close-btn" id="close-hanok-pic">&times;</button>
@@ -155,84 +172,85 @@ export class HanokPic {
       </div>
     `;
 
-        // Set defaults
-        this.preferences.diet = 'both';
-        this.preferences.spice_level = 'medium';
-        this.preferences.group_size = '1-2';
+    // Set defaults
+    this.preferences.diet = 'both';
+    this.preferences.spice_level = 'medium';
+    this.preferences.group_size = '1-2';
 
-        // Event listeners
-        document.getElementById('close-hanok-pic')?.addEventListener('click', () => this.close());
-        document.getElementById('back-btn')?.addEventListener('click', () => {
-            this.currentStep = 1;
-            this.render();
-        });
+    // Event listeners
+    document.getElementById('close-hanok-pic')?.addEventListener('click', () => this.close());
+    document.getElementById('back-btn')?.addEventListener('click', () => {
+      this.currentStep = 1;
+      this.render();
+    });
 
-        // Preference selection
-        document.querySelectorAll('[data-diet]').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const target = e.currentTarget as HTMLElement;
-                document.querySelectorAll('[data-diet]').forEach(b => b.classList.remove('active'));
-                target.classList.add('active');
-                this.preferences.diet = target.dataset.diet;
-            });
-        });
+    // Preference selection
+    document.querySelectorAll('[data-diet]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLElement;
+        document.querySelectorAll('[data-diet]').forEach(b => b.classList.remove('active'));
+        target.classList.add('active');
+        this.preferences.diet = target.dataset.diet;
+      });
+    });
 
-        document.querySelectorAll('[data-spice]').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const target = e.currentTarget as HTMLElement;
-                document.querySelectorAll('[data-spice]').forEach(b => b.classList.remove('active'));
-                target.classList.add('active');
-                this.preferences.spice_level = target.dataset.spice;
-            });
-        });
+    document.querySelectorAll('[data-spice]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLElement;
+        document.querySelectorAll('[data-spice]').forEach(b => b.classList.remove('active'));
+        target.classList.add('active');
+        this.preferences.spice_level = target.dataset.spice;
+      });
+    });
 
-        document.querySelectorAll('[data-group]').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const target = e.currentTarget as HTMLElement;
-                document.querySelectorAll('[data-group]').forEach(b => b.classList.remove('active'));
-                target.classList.add('active');
-                this.preferences.group_size = target.dataset.group;
-            });
-        });
+    document.querySelectorAll('[data-group]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const target = e.currentTarget as HTMLElement;
+        document.querySelectorAll('[data-group]').forEach(b => b.classList.remove('active'));
+        target.classList.add('active');
+        this.preferences.group_size = target.dataset.group;
+      });
+    });
 
-        document.getElementById('get-recommendations')?.addEventListener('click', async () => {
-            await this.fetchRecommendations();
-        });
+    document.getElementById('get-recommendations')?.addEventListener('click', async () => {
+      await this.fetchRecommendations();
+    });
+  }
+
+  private async fetchRecommendations() {
+    try {
+      const loadingBtn = document.getElementById('get-recommendations');
+      if (loadingBtn) {
+        loadingBtn.textContent = 'Finding perfect dishes... 🔍';
+        (loadingBtn as HTMLButtonElement).disabled = true;
+      }
+
+      const response = await getRecommendations(this.preferences as UserPreferences);
+      this.recommendations = response.recommendations;
+      this.currentStep = 3;
+      this.render();
+    } catch (error) {
+      console.error('Error fetching recommendations:', error);
+      alert('Failed to get recommendations. Please try again.');
+      if (document.getElementById('get-recommendations')) {
+        const btn = document.getElementById('get-recommendations') as HTMLButtonElement;
+        btn.textContent = 'Get Recommendations ✨';
+        btn.disabled = false;
+      }
     }
+  }
 
-    private async fetchRecommendations() {
-        try {
-            const loadingBtn = document.getElementById('get-recommendations');
-            if (loadingBtn) {
-                loadingBtn.textContent = 'Finding perfect dishes... 🔍';
-                (loadingBtn as HTMLButtonElement).disabled = true;
-            }
+  private renderRecommendations() {
+    if (!this.container) return;
+    const moodEmojis: Record<string, string> = {
+      comfort: '😌',
+      spicy: '🔥',
+      heavy: '🥩',
+      light: '🥗',
+      sharing: '🎉'
+    };
 
-            const response = await getRecommendations(this.preferences as UserPreferences);
-            this.recommendations = response.recommendations;
-            this.currentStep = 3;
-            this.render();
-        } catch (error) {
-            console.error('Error fetching recommendations:', error);
-            alert('Failed to get recommendations. Please try again.');
-            if (document.getElementById('get-recommendations')) {
-                const btn = document.getElementById('get-recommendations') as HTMLButtonElement;
-                btn.textContent = 'Get Recommendations ✨';
-                btn.disabled = false;
-            }
-        }
-    }
-
-    private renderRecommendations() {
-        const moodEmojis: Record<string, string> = {
-            comfort: '😌',
-            spicy: '🔥',
-            heavy: '🥩',
-            light: '🥗',
-            sharing: '🎉'
-        };
-
-        this.container.innerHTML = `
+    this.container.innerHTML = `
       <div class="hanok-pic-modal">
         <div class="hanok-pic-content recommendations-view">
           <button class="close-btn" id="close-hanok-pic">&times;</button>
@@ -280,25 +298,25 @@ export class HanokPic {
       </div>
     `;
 
-        // Event listeners
-        document.getElementById('close-hanok-pic')?.addEventListener('click', () => this.close());
-        document.getElementById('try-again')?.addEventListener('click', () => {
-            this.currentStep = 1;
-            this.preferences = {};
-            this.render();
-        });
+    // Event listeners
+    document.getElementById('close-hanok-pic')?.addEventListener('click', () => this.close());
+    document.getElementById('try-again')?.addEventListener('click', () => {
+      this.currentStep = 1;
+      this.preferences = {};
+      this.render();
+    });
 
-        document.getElementById('view-full-menu')?.addEventListener('click', () => {
-            window.location.href = '#menu-section';
-            this.close();
-        });
+    document.getElementById('view-full-menu')?.addEventListener('click', () => {
+      window.location.href = '#menu-section';
+      this.close();
+    });
 
-        document.querySelectorAll('.btn-add-to-cart').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const dishId = (e.currentTarget as HTMLElement).dataset.dishId;
-                alert(`Added to cart! Dish ID: ${dishId}`);
-                // TODO: Implement cart functionality
-            });
-        });
-    }
+    document.querySelectorAll('.btn-add-to-cart').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const dishId = (e.currentTarget as HTMLElement).dataset.dishId;
+        alert(`Added to cart! Dish ID: ${dishId}`);
+        // TODO: Implement cart functionality
+      });
+    });
+  }
 }

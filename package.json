@@ -1,0 +1,15 @@
+{
+  "name": "hanok-grill-project",
+  "version": "1.0.0",
+  "description": "Root project to manage Hanok Grill services",
+  "scripts": {
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:backend": "npm start --prefix backend",
+    "dev:ai": "cd ai-service && python main.py",
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\" \"npm run dev:ai\"",
+    "install-all": "npm install && npm install --prefix frontend && npm install --prefix backend && cd ai-service && pip install -r requirements.txt"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

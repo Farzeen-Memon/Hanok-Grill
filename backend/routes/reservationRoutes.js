@@ -65,25 +65,50 @@ router.post("/", async (req, res) => {
       email,
       guests,
       seating,
-      reservationDate,
+      date, // Frontend sends 'date'
+      reservationDate, // or 'reservationDate'
       slot,
       tableId
     } = req.body;
 
-    if (!name || !phone || !guests || !reservationDate || !slot || !tableId || !seating) {
+    const finalDate = date || reservationDate;
+
+    if (!name || !phone || !guests || !finalDate || !slot || !seating) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    // Double-check table is still free
-    const existing = await Reservation.findOne({
-      reservationDate,
-      slot,
-      table: tableId,
-      status: { $in: ["booked", "seated"] }
-    });
+    let finalTableId = tableId;
 
-    if (existing) {
-      return res.status(400).json({ message: "Table already booked for that slot" });
+    // If no tableId provided, find an available one
+    if (!finalTableId) {
+      const reservedTableIds = await Reservation.find({
+        reservationDate: finalDate,
+        slot,
+        status: { $in: ["booked", "seated"] }
+      }).distinct("table");
+
+      const availableTable = await Table.findOne({
+        _id: { $nin: reservedTableIds },
+        capacity: { $gte: Number(guests) },
+        area: seating
+      });
+
+      if (!availableTable) {
+        return res.status(400).json({ message: "No tables available for these settings" });
+      }
+      finalTableId = availableTable._id;
+    } else {
+      // Double-check table is still free
+      const existing = await Reservation.findOne({
+        reservationDate: finalDate,
+        slot,
+        table: finalTableId,
+        status: { $in: ["booked", "seated"] }
+      });
+
+      if (existing) {
+        return res.status(400).json({ message: "Table already booked for that slot" });
+      }
     }
 
     const reservation = await Reservation.create({
@@ -92,12 +117,12 @@ router.post("/", async (req, res) => {
       email,
       guests,
       seating,
-      reservationDate,
+      reservationDate: finalDate,
       slot,
-      table: tableId
+      table: finalTableId
     });
 
-    res.status(201).json({ message: "Reservation created", reservation });
+    res.status(201).json({ message: "Reservation created", reservation, table: finalTableId });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
