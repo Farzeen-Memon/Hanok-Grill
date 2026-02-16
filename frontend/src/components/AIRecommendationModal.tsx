@@ -155,30 +155,39 @@ const AIRecommendationModal: React.FC<AIRecommendationModalProps> = ({ onClose, 
                                 </div>
                             </div>
 
-                            {/* Question 4: Mood */}
-                            <div className="ai-question-block">
-                                <label className="ai-question-label">
-                                    <span className="material-symbols-outlined">mood</span>
-                                    What's your mood?
-                                </label>
-                                <div className="ai-options-grid">
-                                    {[ 'Comfort', 'Energetic', 'Sharing', 'Solo' ].map((option) => (
-                                        <button
-                                            key={option}
-                                            className={`ai-option-btn ${mood === option ? 'active' : ''}`}
-                                            onClick={() => setMood(option)}
-                                        >
-                                            {option}
-                                        </button>
-                                    ))}
+                            {/* Question 4: Mood + Action Section Side-by-Side */}
+                            <div className="ai-mood-action-row lg:col-span-2">
+                                <div className="ai-question-block mood-container">
+                                    <label className="ai-question-label">
+                                        <span className="material-symbols-outlined">mood</span>
+                                        What's your mood?
+                                    </label>
+                                    <div className="ai-options-grid">
+                                        {[ 'Comfort', 'Energetic', 'Sharing', 'Solo' ].map((option) => (
+                                            <button
+                                                key={option}
+                                                className={`ai-option-btn ${mood === option ? 'active' : ''}`}
+                                                onClick={() => setMood(option)}
+                                            >
+                                                {option}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="ai-action-container">
+                                    <button className="ai-action-btn-inline" onClick={handleSubmit}>
+                                        <div className="ai-action-btn-content">
+                                            <span className="material-symbols-outlined ai-action-icon">psychology</span>
+                                            <div className="ai-action-text">
+                                                <span className="ai-action-tag">Sync Interface</span>
+                                                <span className="ai-action-main">Get AI Recommendations</span>
+                                            </div>
+                                        </div>
+                                    </button>
                                 </div>
                             </div>
                         </div>
-
-                        <button className="ai-submit-btn" onClick={handleSubmit}>
-                            <span className="material-symbols-outlined">psychology</span>
-                            Get AI Recommendations
-                        </button>
                     </div>
                 )}
 

@@ -1,19 +1,25 @@
 import React, { useRef, useState } from 'react';
 import './Menu3D.css';
-import AIRecommendationModal from './AIRecommendationModal';
 
 export interface Menu3DProps {
     onBack: () => void;
     cart: Record<string, number>;
     addToCart: (id: string) => void;
     onOpenTerminal: () => void;
+    onOpenAI: () => void;
 }
 
-const Menu3D: React.FC<Menu3DProps> = ({ onBack, cart, addToCart, onOpenTerminal }) => {
+const Menu3D: React.FC<Menu3DProps> = ({
+    onBack,
+    cart,
+    addToCart,
+    onOpenTerminal,
+    onOpenAI
+}) => {
     const scrollRef = useRef<HTMLDivElement>(null);
+    const wrapperRef = useRef<HTMLDivElement>(null);
 
     const [ activeCategory, setActiveCategory ] = useState('All');
-    const [ showAIModal, setShowAIModal ] = useState(false);
 
     const fullMenu = [
         {
@@ -109,7 +115,7 @@ const Menu3D: React.FC<Menu3DProps> = ({ onBack, cart, addToCart, onOpenTerminal
     const getTotalPrice = () => fullMenu.reduce((total, item) => total + (item.price * (cart[ item.id ] || 0)), 0);
 
     return (
-        <div className="menu-3d-wrapper text-white min-h-screen w-full fixed inset-0 z-[100] bg-background-dark font-sans overflow-y-auto no-scrollbar">
+        <div ref={wrapperRef} className="menu-3d-wrapper text-white min-h-screen w-full fixed inset-0 z-[100] bg-background-dark font-sans overflow-y-auto no-scrollbar">
             {/* Background Layer */}
             <div className="fixed inset-0 z-0">
                 <div className="absolute inset-0 bg-[#0a0906]"></div>
@@ -123,30 +129,53 @@ const Menu3D: React.FC<Menu3DProps> = ({ onBack, cart, addToCart, onOpenTerminal
 
             {/* Main Container */}
             <div className="relative z-10 flex flex-col h-screen">
-                {/* Header */}
-                <header className="flex items-center justify-between px-10 py-6 border-b border-white/5 backdrop-blur-md">
-                    <div className="flex items-center gap-3 group cursor-pointer" onClick={onBack}>
-                        <div className="relative size-10 text-primary fiery-logo-glow">
-                            <svg className="w-full h-full" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M50 5C50 5 35 25 35 45C35 65 50 85 50 85C50 85 65 65 65 45C65 25 50 5 50 5Z" fill="currentColor" fillOpacity="0.2"></path>
-                                <path d="M50 15C50 15 40 30 40 45C40 60 50 75 50 75C50 75 60 60 60 45C60 30 50 15 50 15Z" fill="currentColor" fillOpacity="0.5"></path>
-                                <path d="M50 25C50 25 45 35 45 45C45 55 50 65 50 65C50 65 55 55 55 45C55 35 50 25 50 25Z" fill="currentColor"></path>
-                                <path d="M30 40C25 55 35 75 50 85" stroke="currentColor" strokeLinecap="round" strokeWidth="2"></path>
-                                <path d="M70 40C75 55 65 75 50 85" stroke="currentColor" strokeLinecap="round" strokeWidth="2"></path>
-                            </svg>
-                        </div>
-                        <div className="flex flex-col leading-none">
-                            <span className="text-white font-display text-lg font-bold tracking-[0.2em] uppercase">Hanok</span>
-                            <span className="text-primary font-display text-[10px] tracking-[0.4em] uppercase font-bold">Grill</span>
+                {/* Header - Now Sticky */}
+                <header className="sticky top-0 z-50 flex items-center justify-between px-10 py-6 border-b border-white/5 backdrop-blur-xl bg-background-dark/80">
+                    <div className="flex items-center gap-10">
+                        <button
+                            onClick={onBack}
+                            className="group flex items-center text-white/40 hover:text-primary transition-all"
+                        >
+                            <span className="material-symbols-outlined text-4xl group-hover:-translate-x-2 transition-transform">keyboard_backspace</span>
+                        </button>
+
+                        <div className="flex items-center gap-4 group cursor-pointer" onClick={onBack}>
+                            <div className="relative size-10 text-primary fiery-logo-glow">
+                                <svg className="w-full h-full" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M50 5C50 5 35 25 35 45C35 65 50 85 50 85C50 85 65 65 65 45C65 25 50 5 50 5Z" fill="currentColor" fillOpacity="0.2"></path>
+                                    <path d="M50 15C50 15 40 30 40 45C40 60 50 75 50 75C50 75 60 60 60 45C60 30 50 15 50 15Z" fill="currentColor" fillOpacity="0.5"></path>
+                                    <path d="M50 25C50 25 45 35 45 45C45 55 50 65 50 65C50 65 55 55 55 45C55 35 50 25 50 25Z" fill="currentColor"></path>
+                                </svg>
+                            </div>
+                            <div className="flex flex-col leading-none">
+                                <span className="text-white font-display text-lg font-bold tracking-[0.2em] uppercase">Hanok</span>
+                                <span className="text-primary font-display text-[10px] tracking-[0.4em] uppercase font-bold">Grill</span>
+                            </div>
                         </div>
                     </div>
-                    <nav className="hidden md:flex items-center gap-10">
-                        <a className="text-white/60 hover:text-primary transition-colors text-xs font-bold tracking-[0.2em] uppercase" href="#" onClick={(e) => { e.preventDefault(); onBack(); }}>Home</a>
-                        <a className="text-white/60 hover:text-primary transition-colors text-xs font-bold tracking-[0.2em] uppercase" href="#">The Vault</a>
-                        <a className="text-white/60 hover:text-primary transition-colors text-xs font-bold tracking-[0.2em] uppercase" href="#">Sensory Room</a>
-                        <a className="text-primary text-xs font-bold tracking-[0.2em] uppercase border-b-2 border-primary pb-1" href="#">3D Menu</a>
-                        <a className="text-white/60 hover:text-primary transition-colors text-xs font-bold tracking-[0.2em] uppercase" href="#">History</a>
+
+                    <nav className="hidden md:flex items-center gap-12">
+                        <a
+                            className="text-white/60 hover:text-primary transition-colors text-xs font-bold tracking-[0.2em] uppercase cursor-pointer"
+                            onClick={(e) => { e.preventDefault(); document.querySelector('.specials-section')?.scrollIntoView({ behavior: 'smooth' }); }}
+                        >
+                            Our Specials
+                        </a>
+                        <a
+                            className="text-white/60 hover:text-primary transition-colors text-xs font-bold tracking-[0.2em] uppercase cursor-pointer"
+                            onClick={(e) => { e.preventDefault(); document.getElementById('entire-menu')?.scrollIntoView({ behavior: 'smooth' }); }}
+                        >
+                            Entire Menu
+                        </a>
+                        <a
+                            className="text-white/60 hover:text-primary transition-colors text-xs font-bold tracking-[0.2em] uppercase cursor-pointer"
+                            onClick={(e) => { e.preventDefault(); onOpenAI(); }}
+                        >
+                            AI Recommendations
+                        </a>
+                        <a className="text-white/60 hover:text-primary transition-colors text-xs font-bold tracking-[0.2em] uppercase" href="#" onClick={(e) => e.preventDefault()}>History</a>
                     </nav>
+
                     <div className="flex items-center gap-6">
                         <div className="flex flex-col items-end mr-2">
                             <span className="text-[10px] font-black tracking-[0.2em] text-primary uppercase">Total Order</span>
@@ -175,7 +204,7 @@ const Menu3D: React.FC<Menu3DProps> = ({ onBack, cart, addToCart, onOpenTerminal
                     </div>
 
                     {/* Specials Section */}
-                    <div className="relative z-10 w-full mb-32">
+                    <div className="relative z-10 w-full mb-32 specials-section">
                         <div className="text-center mb-8">
                             <span className="text-primary font-black text-[12px] tracking-[0.5em] uppercase mb-2 block font-display">Premium Curation</span>
                             <h2 className="text-5xl font-bold font-display tracking-tight text-white/90">OUR SPECIALS</h2>
@@ -250,7 +279,6 @@ const Menu3D: React.FC<Menu3DProps> = ({ onBack, cart, addToCart, onOpenTerminal
                             ))}
                         </div>
                     </div>
-
                     {/* Scroll to View indicator */}
                     <div
                         className="flex flex-col items-center justify-center -mt-10 mb-20 gap-4 opacity-40 hover:opacity-100 transition-opacity duration-500 cursor-pointer group"
@@ -268,9 +296,25 @@ const Menu3D: React.FC<Menu3DProps> = ({ onBack, cart, addToCart, onOpenTerminal
                                 {/* Left: Main Menu Grid */}
                                 <div className="flex-1">
                                     <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-                                        <div>
-                                            <span className="text-primary font-black text-[10px] tracking-[0.5em] uppercase mb-4 block">Selection</span>
-                                            <h3 className="text-6xl font-bold font-display text-white/90">THE ENTIRE MENU</h3>
+                                        <div className="flex items-center gap-4">
+                                            <button
+                                                onClick={onBack}
+                                                className="size-12 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-primary hover:border-primary transition-all group"
+                                                title="Back to Home"
+                                            >
+                                                <span className="material-symbols-outlined text-3xl group-hover:-translate-x-1 transition-transform">keyboard_backspace</span>
+                                            </button>
+                                            <button
+                                                onClick={() => wrapperRef.current?.scrollTo({ top: 0, behavior: 'smooth' })}
+                                                className="size-12 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-primary hover:border-primary transition-all group"
+                                                title="Jump to Top"
+                                            >
+                                                <span className="material-symbols-outlined text-3xl group-hover:-translate-y-1 transition-transform">keyboard_arrow_up</span>
+                                            </button>
+                                            <div>
+                                                <span className="text-primary font-black text-[10px] tracking-[0.5em] uppercase mb-4 block">Selection</span>
+                                                <h3 className="text-6xl font-bold font-display text-white/90">THE ENTIRE MENU</h3>
+                                            </div>
                                         </div>
                                         <div className="flex gap-4 border-b border-white/10 pb-2 flex-wrap">
                                             {[ 'All', 'Appetizers', 'Main', 'Stews', 'Drinks' ].map(cat => (
@@ -320,7 +364,7 @@ const Menu3D: React.FC<Menu3DProps> = ({ onBack, cart, addToCart, onOpenTerminal
                                 {/* Right: AI Recommendation Sidebar */}
                                 <div className="w-full lg:w-[400px] flex flex-col gap-10">
                                     {/* AI Recommendation Widget */}
-                                    <div className="bg-primary/5 border border-primary/20 rounded-3xl p-8 relative overflow-hidden group cursor-pointer hover:bg-primary/10 transition-all duration-500" onClick={() => setShowAIModal(true)}>
+                                    <div className="bg-primary/5 border border-primary/20 rounded-3xl p-8 relative overflow-hidden group cursor-pointer hover:bg-primary/10 transition-all duration-500" onClick={() => onOpenAI()}>
                                         <div className="absolute top-0 right-0 p-4">
                                             <span className="flex size-3">
                                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
@@ -348,30 +392,7 @@ const Menu3D: React.FC<Menu3DProps> = ({ onBack, cart, addToCart, onOpenTerminal
                                         </div>
                                     </div>
 
-                                    {/* ML Model Diagnostic */}
-                                    <div className="border border-white/5 rounded-3xl p-8 bg-black/40">
-                                        <div className="flex items-center gap-3 mb-6">
-                                            <span className="material-symbols-outlined text-primary text-xl animate-pulse">analytics</span>
-                                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">ML Engine Diagnostic</span>
-                                        </div>
-                                        <div className="space-y-4">
-                                            <div className="bg-white/5 h-1.5 rounded-full overflow-hidden">
-                                                <div className="bg-primary h-full w-[85%] animate-[pulse_2s_infinite]"></div>
-                                            </div>
-                                            <div className="flex justify-between text-[9px] font-bold text-white/30 uppercase tracking-widest">
-                                                <span>Sensory Accuracy</span>
-                                                <span className="text-primary">85.4%</span>
-                                            </div>
-                                            <div className="pt-4 border-t border-white/5">
-                                                <p className="text-[8px] font-mono text-primary/60 leading-relaxed uppercase">
-                                                    &gt; Processing taste clusters...<br />
-                                                    &gt; analyzing user sentiment...<br />
-                                                    &gt; updating preference matrix...<br />
-                                                    &gt; neural sync complete.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
+
 
                                 </div>
                             </div>
@@ -381,21 +402,10 @@ const Menu3D: React.FC<Menu3DProps> = ({ onBack, cart, addToCart, onOpenTerminal
 
                 {/* Simplified Footer */}
                 <footer className="h-24 lg:h-32 mt-auto flex flex-col items-center justify-center gap-4">
-                    <div className="flex flex-col items-center gap-2 animate-pulse">
-                        <span className="text-[13px] text-white/40 font-black tracking-[0.4em] uppercase">Scroll to view Full Menu</span>
-                        <div className="w-px h-8 bg-gradient-to-b from-primary/50 to-transparent"></div>
-                    </div>
+
                     <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
                 </footer>
             </div>
-
-            {/* AI Recommendation Modal */}
-            {showAIModal && (
-                <AIRecommendationModal
-                    onClose={() => setShowAIModal(false)}
-                    onAddToCart={addToCart}
-                />
-            )}
         </div>
     );
 };

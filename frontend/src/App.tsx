@@ -5,9 +5,11 @@ import ReservationForm from './components/ReservationForm';
 import OrderPage from './components/OrderPage';
 import Menu3D from './components/Menu3D';
 import HomePage from './components/HomePage';
+import AIRecommendationModal from './components/AIRecommendationModal';
 
 function App() {
     const [ currentPage, setCurrentPage ] = useState('home');
+    const [ showAIModal, setShowAIModal ] = useState(false);
     const [ showHanokPic, setShowHanokPic ] = useState(false);
     const [ cart, setCart ] = useState<Record<string, number>>({});
 
@@ -51,14 +53,15 @@ function App() {
                         cart={cart}
                         addToCart={addToCart}
                         onOpenTerminal={() => setCurrentPage('order')}
+                        onOpenAI={() => setShowAIModal(true)}
                     />
                 );
             default:
                 return (
                     <HomePage
-                        onOrderNow={() => setCurrentPage('menu-3d')}
                         onMenu={() => setCurrentPage('menu-3d')}
                         onReservations={() => setCurrentPage('reservation')}
+                        onAI={() => setShowAIModal(true)}
                     />
                 );
         }
@@ -71,6 +74,14 @@ function App() {
 
             {/* Main Content */}
             {renderPage()}
+
+            {/* AI Recommendation Modal */}
+            {showAIModal && (
+                <AIRecommendationModal
+                    onClose={() => setShowAIModal(false)}
+                    onAddToCart={addToCart}
+                />
+            )}
 
             {/* Hanok Pic Modal */}
             {showHanokPic && (

@@ -127,23 +127,23 @@ export default function OrderPage({ onBack, cart, updateQuantity, clearCart }: O
                 <div className="absolute inset-0 cyber-grid-precise opacity-30"></div>
             </div>
 
-            <div className="relative z-10 flex flex-col max-w-6xl mx-auto px-6 lg:px-10">
+            <div className="relative z-10 flex flex-col w-screen px-6 lg:px-20">
                 {/* Header */}
                 <header className="flex items-center justify-between py-10 border-b border-white/5">
-                    <div className="flex items-center gap-3 group cursor-pointer" onClick={onBack}>
+                    <button onClick={onBack} className="group flex items-center text-white/40 hover:text-primary transition-all">
+                        <span className="material-symbols-outlined text-4xl group-hover:-translate-x-2 transition-transform">keyboard_backspace</span>
+                    </button>
+
+                    <div className="flex items-center gap-3">
                         <span className="material-symbols-outlined text-primary text-3xl">terminal</span>
                         <div className="flex flex-col leading-none">
                             <span className="text-white font-display text-lg font-bold tracking-[0.2em] uppercase">Order</span>
                             <span className="text-primary font-display text-[10px] tracking-[0.4em] uppercase font-bold">Terminal</span>
                         </div>
                     </div>
-                    <button onClick={onBack} className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 hover:text-primary transition-colors flex items-center gap-2">
-                        <span className="material-symbols-outlined text-sm">keyboard_backspace</span>
-                        Return to Menu
-                    </button>
                 </header>
 
-                <main className="grid grid-cols-1 lg:grid-cols-3 gap-12 mt-12 items-start">
+                <main className="grid grid-cols-1 lg:grid-cols-3 gap-20 mt-12 items-start">
                     {/* Left: Cart Items */}
                     <div className="lg:col-span-2 space-y-6">
                         <div className="flex items-center justify-between">

@@ -6,6 +6,12 @@ interface ReservationFormProps {
     onBack: () => void;
 }
 
+declare global {
+    interface Window {
+        Razorpay: any;
+    }
+}
+
 export default function ReservationForm({ onBack }: ReservationFormProps) {
     const [ formData, setFormData ] = useState({
         name: '',
@@ -37,21 +43,42 @@ export default function ReservationForm({ onBack }: ReservationFormProps) {
             alert('Please select a time slot');
             return;
         }
-        setLoading(true);
 
-        try {
-            const response = await createReservation({
-                ...formData,
-                reservationDate: formData.date,
-            });
+        const options = {
+            key: "rzp_test_RX3jjZVra6hFu2", // Reusing the same test key
+            amount: 150 * 100, // ₹150 in paise
+            currency: "INR",
+            name: "Hanok Grill",
+            description: "Table Reservation Security Deposit",
+            handler: async function (response: any) {
+                setLoading(true);
+                try {
+                    const res = await createReservation({
+                        ...formData,
+                        reservationDate: formData.date,
+                        paymentId: response.razorpay_payment_id
+                    });
 
-            alert(`✅ Reservation confirmed!\nTable: ${response.table}\nDate: ${formData.date}\nSlot: ${formData.slot}`);
-            onBack();
-        } catch (error) {
-            alert('❌ Failed to create reservation. Please try again.');
-        } finally {
-            setLoading(false);
-        }
+                    alert(`✅ Reservation confirmed!\nReservation ID: ${res._id || 'Confirmed'}\nTable Reserved for: ${formData.name}`);
+                    onBack();
+                } catch (error) {
+                    alert('❌ Payment successful but failed to save reservation. Please contact us.');
+                } finally {
+                    setLoading(false);
+                }
+            },
+            prefill: {
+                name: formData.name,
+                email: formData.email,
+                contact: formData.phone
+            },
+            theme: {
+                color: "#eebd2b"
+            }
+        };
+
+        const rzp = new window.Razorpay(options);
+        rzp.open();
     };
 
     return (
@@ -67,7 +94,18 @@ export default function ReservationForm({ onBack }: ReservationFormProps) {
             <div className="relative z-10 flex flex-col min-h-screen">
                 {/* Header */}
                 <header className="flex items-center justify-between px-10 py-6 border-b border-white/5 backdrop-blur-md sticky top-0 bg-[#0a0906]/40">
-                    <div className="flex items-center gap-3 group cursor-pointer" onClick={onBack}>
+                    <button
+                        onClick={onBack}
+                        className="group flex items-center gap-4 text-white/40 hover:text-primary transition-all"
+                    >
+                        <span className="material-symbols-outlined text-3xl group-hover:-translate-x-2 transition-transform">keyboard_backspace</span>
+                        <div className="flex flex-col items-start leading-none pointer-events-none">
+                            <span className="text-[10px] font-black uppercase tracking-[0.3em]">Return</span>
+                            <span className="text-white group-hover:text-primary font-display text-lg font-bold tracking-[0.1em] uppercase transition-colors">Home</span>
+                        </div>
+                    </button>
+
+                    <div className="flex items-center gap-3">
                         <div className="relative size-10 text-primary fiery-logo-glow">
                             <svg className="w-full h-full" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M50 5C50 5 35 25 35 45C35 65 50 85 50 85C50 85 65 65 65 45C65 25 50 5 50 5Z" fill="currentColor" fillOpacity="0.2"></path>
@@ -80,13 +118,6 @@ export default function ReservationForm({ onBack }: ReservationFormProps) {
                             <span className="text-primary font-display text-[10px] tracking-[0.4em] uppercase font-bold">Grill</span>
                         </div>
                     </div>
-                    <button
-                        onClick={onBack}
-                        className="text-xs font-bold tracking-[0.3em] uppercase text-white/50 hover:text-primary transition-colors flex items-center gap-2"
-                    >
-                        <span className="material-symbols-outlined text-sm">west</span>
-                        Return Home
-                    </button>
                 </header>
 
                 <main className="flex-1 flex items-center justify-center p-6 lg:p-20">
@@ -203,7 +234,7 @@ export default function ReservationForm({ onBack }: ReservationFormProps) {
                                                     >
                                                         <option value="indoor" className="bg-[#0a0906]">Indoor Dining</option>
                                                         <option value="outdoor" className="bg-[#0a0906]">Terrace Garden</option>
-                                                        <option value="private" className="bg-[#0a0906]">The Vault (Private)</option>
+                                                        <option value="private" className="bg-[#0a0906]">Private Suite</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -232,15 +263,21 @@ export default function ReservationForm({ onBack }: ReservationFormProps) {
                                             />
                                         </div>
 
-                                        <div className="space-y-2">
-                                            <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">Select Time Slot</label>
+                                        <div className="space-y-4">
+                                            <div className="flex items-center justify-between border-b border-white/5 pb-2">
+                                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">Select Time Slot</label>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Booking Amount:</span>
+                                                    <span className="text-sm font-bold text-white">₹150</span>
+                                                </div>
+                                            </div>
                                             <div className="grid grid-cols-2 gap-3">
                                                 {timeSlots.map(slot => (
                                                     <button
                                                         key={slot}
                                                         type="button"
                                                         onClick={() => setFormData({ ...formData, slot })}
-                                                        className={`py-4 rounded-xl text-[10px] font-bold tracking-widest uppercase transition-all border ${formData.slot === slot ? 'bg-primary border-primary text-background-dark' : 'bg-white/5 border-white/10 hover:border-primary/50'}`}
+                                                        className={`py-2.5 rounded-xl text-sm font-bold tracking-widest uppercase transition-all border ${formData.slot === slot ? 'bg-primary border-primary text-background-dark' : 'bg-white/5 border-white/10 hover:border-primary/50'}`}
                                                     >
                                                         {slot}
                                                     </button>
@@ -274,7 +311,7 @@ export default function ReservationForm({ onBack }: ReservationFormProps) {
                                                 {loading ? (
                                                     <span className="size-5 border-2 border-background-dark border-t-transparent rounded-full animate-spin"></span>
                                                 ) : (
-                                                    <>Confirm Booking</>
+                                                    <>Pay ₹150 & Confirm</>
                                                 )}
                                             </button>
                                         </div>
