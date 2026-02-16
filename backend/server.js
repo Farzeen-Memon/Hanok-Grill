@@ -12,6 +12,7 @@ app.use(express.json());
 // Import routes
 const reservationRoutes = require("./routes/reservationRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+const recommendationRoutes = require("./routes/recommendationRoutes");
 
 mongoose
   .connect(process.env.MONGO_URI)
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 // API routes
 app.use("/api/reservations", reservationRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/recommendations", recommendationRoutes);
 
 app.listen(process.env.PORT || 4000, () =>
   console.log("Server running on port", process.env.PORT || 4000)

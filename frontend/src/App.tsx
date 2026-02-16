@@ -2,8 +2,8 @@ import { useState } from 'react';
 import './App.css';
 import HanokPicComponent from './components/HanokPicComponent';
 import ReservationForm from './components/ReservationForm';
-import OrderPage, { OrderPageProps } from './components/OrderPage';
-import Menu3D, { Menu3DProps } from './components/Menu3D';
+import OrderPage from './components/OrderPage';
+import Menu3D from './components/Menu3D';
 import HomePage from './components/HomePage';
 
 function App() {

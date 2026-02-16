@@ -1,0 +1,281 @@
+.concierge-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: #0a0906;
+    border: 2px solid #eebd2b;
+    color: #eebd2b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(238, 189, 43, 0.2);
+}
+
+.concierge-toggle:hover {
+    transform: scale(1.1) translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(238, 189, 43, 0.4);
+    background: #1a1410;
+}
+
+.concierge-toggle .material-symbols-outlined {
+    font-size: 28px;
+    margin-bottom: 2px;
+}
+
+.toggle-label {
+    font-size: 8px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.concierge-icon-rings {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.concierge-icon-rings .ring {
+    position: absolute;
+    inset: -5px;
+    border: 1px solid rgba(238, 189, 43, 0.3);
+    border-radius: 50%;
+    animation: ring-pulse 3s infinite linear;
+}
+
+.concierge-icon-rings .ring:nth-child(2) {
+    animation-delay: 1.5s;
+    inset: -10px;
+}
+
+@keyframes ring-pulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1.3);
+        opacity: 0;
+    }
+}
+
+.concierge-window {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 380px;
+    height: 550px;
+    background: rgba(10, 9, 6, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(238, 189, 43, 0.2);
+    border-radius: 24px;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 40px rgba(238, 189, 43, 0.1);
+    animation: window-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes window-pop {
+    from {
+        transform: scale(0.8) translateY(100px);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+.concierge-header {
+    background: linear-gradient(to right, #1a1410, #0a0906);
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.concierge-header-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.concierge-header-icon {
+    color: #eebd2b;
+    font-size: 32px;
+}
+
+.concierge-header h3 {
+    font-size: 16px;
+    color: #fff;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.concierge-header p {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 2px 0 0 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.concierge-close {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.concierge-close:hover {
+    color: #eebd2b;
+}
+
+.concierge-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.message-bubble {
+    max-width: 85%;
+    padding: 12px 16px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.5;
+    position: relative;
+}
+
+.message-bubble.agent {
+    align-self: flex-start;
+    background: rgba(255, 255, 255, 0.05);
+    color: #eee;
+    border-bottom-left-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.message-bubble.user {
+    align-self: flex-end;
+    background: #eebd2b;
+    color: #0a0906;
+    border-bottom-right-radius: 4px;
+    font-weight: 500;
+}
+
+.message-time {
+    font-size: 9px;
+    opacity: 0.5;
+    display: block;
+    margin-top: 5px;
+    text-align: right;
+}
+
+.concierge-input-area {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    gap: 10px;
+}
+
+.concierge-input-area input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 10px 15px;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.concierge-input-area input:focus {
+    border-color: rgba(238, 189, 43, 0.5);
+}
+
+.concierge-input-area button {
+    background: #eebd2b;
+    color: #0a0906;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+}
+
+.concierge-input-area button:hover {
+    background: #fff;
+    transform: scale(1.05);
+}
+
+/* Typing Indicator */
+.typing {
+    display: flex;
+    gap: 4px;
+    padding: 15px 20px !important;
+}
+
+.typing .dot {
+    width: 6px;
+    height: 6px;
+    background: #eebd2b;
+    border-radius: 50%;
+    animation: dot-jump 1.4s infinite ease-in-out;
+}
+
+.typing .dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing .dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes dot-jump {
+
+    0%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-6px);
+    }
+}
+
+/* Scrollbar */
+.concierge-messages::-webkit-scrollbar {
+    width: 4px;
+}
+
+.concierge-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.concierge-messages::-webkit-scrollbar-thumb {
+    background: rgba(238, 189, 43, 0.3);
+    border-radius: 10px;
+}

@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import './Menu3D.css';
+import AIRecommendationModal from './AIRecommendationModal';
 
 export interface Menu3DProps {
     onBack: () => void;
@@ -12,6 +13,7 @@ const Menu3D: React.FC<Menu3DProps> = ({ onBack, cart, addToCart, onOpenTerminal
     const scrollRef = useRef<HTMLDivElement>(null);
 
     const [ activeCategory, setActiveCategory ] = useState('All');
+    const [ showAIModal, setShowAIModal ] = useState(false);
 
     const fullMenu = [
         {
@@ -315,10 +317,10 @@ const Menu3D: React.FC<Menu3DProps> = ({ onBack, cart, addToCart, onOpenTerminal
                                     </div>
                                 </div>
 
-                                {/* Right: AI & Hanok Sidebar */}
+                                {/* Right: AI Recommendation Sidebar */}
                                 <div className="w-full lg:w-[400px] flex flex-col gap-10">
-                                    {/* AI Prediction Widget */}
-                                    <div className="bg-primary/5 border border-primary/20 rounded-3xl p-8 relative overflow-hidden group">
+                                    {/* AI Recommendation Widget */}
+                                    <div className="bg-primary/5 border border-primary/20 rounded-3xl p-8 relative overflow-hidden group cursor-pointer hover:bg-primary/10 transition-all duration-500" onClick={() => setShowAIModal(true)}>
                                         <div className="absolute top-0 right-0 p-4">
                                             <span className="flex size-3">
                                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
@@ -328,51 +330,21 @@ const Menu3D: React.FC<Menu3DProps> = ({ onBack, cart, addToCart, onOpenTerminal
                                         <div className="relative z-10">
                                             <div className="flex items-center gap-3 mb-6">
                                                 <span className="material-symbols-outlined text-primary text-2xl">neurology</span>
-                                                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Neural Recommendation</span>
+                                                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Hanok AI Picks</span>
                                             </div>
-                                            <div className="flex gap-4 items-center mb-6">
-                                                <div className="size-24 rounded-full border-4 border-primary/30 p-1">
-                                                    <img src="https://images.unsplash.com/photo-1594221708779-948211442050?auto=format&fit=crop&q=80&w=400" className="w-full h-full object-cover rounded-full" alt="Rec" />
-                                                </div>
-                                                <div>
-                                                    <h5 className="text-xl font-bold text-white italic">Bulgogi Ribeye</h5>
-                                                    <p className="text-[10px] text-white/40 uppercase tracking-widest mt-1">98% Match for your taste</p>
-                                                </div>
+                                            <div className="mb-6">
+                                                <h5 className="text-2xl font-bold text-white mb-2">Get Personalized Recommendations</h5>
+                                                <p className="text-[11px] text-white/60 leading-relaxed">Answer 4 quick questions and let our AI recommend the perfect dishes for your mood and preferences.</p>
                                             </div>
                                             <button
-                                                onClick={() => addToCart('m6')}
-                                                className="w-full bg-primary/10 border border-primary/30 hover:bg-primary hover:text-background-dark text-primary py-3 rounded-xl text-[10px] font-black uppercase tracking-[0.3em] transition-all"
+                                                className="w-full bg-primary/10 border border-primary/30 hover:bg-primary hover:text-background-dark text-primary py-3 rounded-xl text-[10px] font-black uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-2"
                                             >
-                                                Accept Recommendation
+                                                <span className="material-symbols-outlined text-base">psychology</span>
+                                                Take AI Recommendation
                                             </button>
                                         </div>
                                         <div className="absolute bottom-[-20%] right-[-10%] opacity-5 group-hover:opacity-10 transition-opacity duration-700">
                                             <span className="material-symbols-outlined text-[200px]">cognition</span>
-                                        </div>
-                                    </div>
-
-                                    {/* Hanok Visual Vault */}
-                                    <div className="bg-white/[0.03] border border-white/10 rounded-3xl p-8">
-                                        <div className="flex items-center justify-between mb-8">
-                                            <div className="flex items-center gap-3">
-                                                <span className="material-symbols-outlined text-white/60 text-xl">camera_outdoor</span>
-                                                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/60">Hanok Visual Vault</span>
-                                            </div>
-                                            <span className="text-[9px] text-primary font-bold uppercase tracking-widest px-2 py-1 bg-primary/10 rounded">LIVE_FEED</span>
-                                        </div>
-                                        <div className="grid grid-cols-2 gap-3">
-                                            <div className="aspect-square bg-white/5 rounded-xl overflow-hidden group cursor-pointer">
-                                                <img src="https://images.unsplash.com/photo-1543326175-3b608882416c?auto=format&fit=crop&q=80&w=400" className="w-full h-full object-cover opacity-50 group-hover:opacity-100 transition-all duration-500 scale-110 group-hover:scale-100" />
-                                            </div>
-                                            <div className="aspect-square bg-white/5 rounded-xl overflow-hidden group cursor-pointer">
-                                                <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=400" className="w-full h-full object-cover opacity-50 group-hover:opacity-100 transition-all duration-500 scale-110 group-hover:scale-100" />
-                                            </div>
-                                            <div className="aspect-square bg-white/5 rounded-xl overflow-hidden group cursor-pointer">
-                                                <img src="https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?auto=format&fit=crop&q=80&w=400" className="w-full h-full object-cover opacity-50 group-hover:opacity-100 transition-all duration-500 scale-110 group-hover:scale-100" />
-                                            </div>
-                                            <div className="aspect-square bg-white/5 rounded-xl overflow-hidden group cursor-pointer flex items-center justify-center border border-dashed border-white/20 hover:border-primary/50 transition-colors">
-                                                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 group-hover:text-primary transition-colors">Full Gallery</span>
-                                            </div>
                                         </div>
                                     </div>
 
@@ -416,6 +388,14 @@ const Menu3D: React.FC<Menu3DProps> = ({ onBack, cart, addToCart, onOpenTerminal
                     <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
                 </footer>
             </div>
+
+            {/* AI Recommendation Modal */}
+            {showAIModal && (
+                <AIRecommendationModal
+                    onClose={() => setShowAIModal(false)}
+                    onAddToCart={addToCart}
+                />
+            )}
         </div>
     );
 };
