@@ -1,32 +1,54 @@
 import React from 'react';
 import GrillHeroScene from './GrillHeroScene';
+import './HomePage.css';
 
 interface HomePageProps {
     onMenu: () => void;
     onReservations: () => void;
     onAI?: () => void;
+    initialScrollSection?: string | null;
 }
 
-const HomePage: React.FC<HomePageProps> = ({ onMenu, onReservations, onAI }) => {
+const HomePage: React.FC<HomePageProps> = ({ onMenu, onReservations, onAI, initialScrollSection }) => {
+    const [ isScrolled, setIsScrolled ] = React.useState(false);
+
+    React.useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 50);
+        };
+        window.addEventListener('scroll', handleScroll);
+
+        if (initialScrollSection) {
+            setTimeout(() => {
+                const element = document.getElementById(initialScrollSection);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
+        }
+
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [ initialScrollSection ]);
+
     return (
         <div className="bg-[#050505] overflow-y-auto no-scrollbar scroll-smooth">
             <header className="relative w-screen h-screen flex flex-col overflow-hidden bg-[#050505] home-cinematic">
                 {/* Background Layer - 3D Cinematic Grill Scene */}
                 <GrillHeroScene />
 
-                {/* Navigation Bar - Now Fullscreen/Full-width */}
-                <nav className="fixed top-0 left-0 w-full z-50 px-8 py-6 flex items-center justify-between border-b border-white/5 glassmorphism">
+                {/* Navigation Bar - Increased z-index and opacity control */}
+                <nav className={`fixed top-0 left-0 w-full z-[1000] px-8 py-6 flex items-center justify-between border-b border-white/5 transition-all duration-500 ${isScrolled ? 'bg-[#080808]/95 backdrop-blur-3xl py-4' : 'glassmorphism'}`}>
                     <div className="flex items-center gap-4 group cursor-pointer">
-                        <div className="relative size-12 text-primary fiery-logo-glow">
+                        <div className="relative size-12 text-[#eebd2b] opacity-90 transition-opacity group-hover:opacity-100">
                             <svg className="w-full h-full" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M50 5C50 5 35 25 35 45C35 65 50 85 50 85C50 85 65 65 65 45C65 25 50 5 50 5Z" fill="currentColor" fillOpacity="0.2"></path>
-                                <path d="M50 15C50 15 40 30 40 45C40 60 50 75 50 75C50 75 60 60 60 45C60 30 50 15 50 15Z" fill="currentColor" fillOpacity="0.5"></path>
+                                <path d="M50 5C50 5 35 25 35 45C35 65 50 85 50 85C50 85 65 65 65 45C65 25 50 5 50 5Z" fill="currentColor" fillOpacity="0.15"></path>
+                                <path d="M50 15C50 15 40 30 40 45C40 60 50 75 50 75C50 75 60 60 60 45C60 30 50 15 50 15Z" fill="currentColor" fillOpacity="0.4"></path>
                                 <path d="M50 25C50 25 45 35 45 45C45 55 50 65 50 65C50 65 55 55 55 45C55 35 50 25 50 25Z" fill="currentColor"></path>
                             </svg>
                         </div>
                         <div className="flex flex-col leading-none">
-                            <span className="text-white font-display text-2xl font-bold tracking-[0.25em] uppercase">Hanok</span>
-                            <span className="text-primary font-display text-xs tracking-[0.5em] uppercase font-bold">Grill</span>
+                            <span className="text-[#C9A227] font-display text-2xl font-bold tracking-[0.35em] uppercase">Hanok</span>
+                            <span className="text-white/60 font-display text-xs tracking-[0.8em] uppercase font-bold mt-2">Grill</span>
                         </div>
                     </div>
 
@@ -48,7 +70,7 @@ const HomePage: React.FC<HomePageProps> = ({ onMenu, onReservations, onAI }) => 
                             Login
                         </button>
                         <button
-                            className="bg-primary hover:bg-white text-background-dark px-10 py-3 rounded-none text-xs uppercase tracking-[0.2em] font-black transition-all transform hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(238,189,43,0.4)]"
+                            className="bg-primary hover:bg-white text-background-dark px-10 py-3 rounded-none text-xs uppercase tracking-[0.2em] font-black transition-all transform hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(179,139,47,0.3)]"
                             onClick={onReservations}
                         >
                             Book Table
@@ -56,74 +78,66 @@ const HomePage: React.FC<HomePageProps> = ({ onMenu, onReservations, onAI }) => 
                     </div>
                 </nav>
 
-                {/* Main Content - Buttons only, typography is in 3D */}
-                <main className="relative z-20 flex-1 flex flex-col items-center justify-end text-center px-4 pb-32">
-                    {/* HUD / Dashboard Overlay */}
-                    <div className="absolute top-1/2 left-10 -translate-y-1/2 hidden xl:block">
-                        <div className="space-y-6">
-                            <div className="border border-primary/20 bg-black/40 backdrop-blur-xl p-6 rounded-none w-64 space-y-4">
-                                <div className="flex items-center gap-3">
-                                    <span className="material-symbols-outlined text-primary text-xl animate-pulse">analytics</span>
-                                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">Neural Sync</span>
-                                </div>
-                                <div className="space-y-3">
-                                    <div className="bg-white/5 h-1 rounded-full overflow-hidden">
-                                        <div className="bg-primary h-full w-[85%] animate-[pulse_2s_infinite]"></div>
-                                    </div>
-                                    <div className="flex justify-between text-[8px] font-bold text-white/30 uppercase tracking-widest">
-                                        <span>Sync Status</span>
-                                        <span className="text-primary">94.2%</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="border border-primary/20 bg-black/40 backdrop-blur-xl p-6 rounded-none w-64 space-y-4">
-                                <div className="flex items-center gap-3">
-                                    <span className="material-symbols-outlined text-primary text-xl">psychology</span>
-                                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">Environment</span>
-                                </div>
-                                <div className="space-y-1">
-                                    <p className="text-[9px] font-mono text-primary/60 uppercase tracking-tighter">&gt; Temperature: 1800°C</p>
-                                    <p className="text-[9px] font-mono text-primary/60 uppercase tracking-tighter">&gt; Smoke Density: Optimal</p>
-                                    <p className="text-[9px] font-mono text-primary/60 uppercase tracking-tighter">&gt; Ember Flow: Synchronized</p>
-                                </div>
-                            </div>
+                {/* Main Content — Now Aligned Left in the black space */}
+                <main className="relative z-20 flex-1 flex flex-col justify-center items-start text-left px-[10vw] pt-[12vh] pb-16" style={{ maxWidth: '80%' }}>
+                    <div className="space-y-6">
+                        <p style={{ fontSize: '0.65rem', letterSpacing: '0.7em', color: '#A89C85', textTransform: 'uppercase', fontWeight: 600 }}>
+                            Seoul · Established 1826
+                        </p>
+                        <h1
+                            className="font-display font-medium leading-tight uppercase"
+                            style={{
+                                fontSize: 'clamp(3rem, 7vw, 7.5rem)',
+                                color: '#D4AF37', /* Warm gold #C9A227 + approx 3% brightness boost */
+                                letterSpacing: '0.35em',
+                                textShadow: 'none',
+                                opacity: 0.98
+                            }}
+                        >
+                            Hanok<br />
+                            <span className="grill-text">
+                                Grill
+                            </span>
+                        </h1>
+                        <div className="flex flex-col gap-4 mt-10">
+                            <p style={{ fontSize: '0.7rem', letterSpacing: '0.6em', color: '#A89C85', textTransform: 'uppercase', fontWeight: 300 }}>
+                                Mastery of Traditional Fire
+                            </p>
+                            <p className="font-display italic" style={{ fontSize: '0.9rem', letterSpacing: '0.15em', color: '#B8A890', opacity: 0.8, marginTop: '0.5rem' }}>
+                                “An ember of heritage, alive in every dish.”
+                            </p>
                         </div>
                     </div>
 
-                    <div className="absolute top-1/2 right-10 -translate-y-1/2 hidden xl:block">
-                        <div className="border border-primary/20 bg-black/40 backdrop-blur-xl p-6 rounded-none w-64">
-                            <div className="flex items-center gap-3 mb-4">
-                                <span className="material-symbols-outlined text-primary text-xl">database</span>
-                                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">Real-time Data</span>
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <span className="text-[8px] text-white/30 uppercase block mb-1">Guests</span>
-                                    <span className="text-lg font-bold text-white">420+</span>
-                                </div>
-                                <div>
-                                    <span className="text-[8px] text-white/30 uppercase block mb-1">Orders</span>
-                                    <span className="text-lg font-bold text-white">1.2k</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="space-y-8 max-w-4xl">
-                        <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
-                            <button
-                                className="group flex items-center gap-6 bg-black/40 backdrop-blur-md border-2 border-primary shadow-[0_0_30px_rgba(238,189,43,0.3)] hover:shadow-[0_0_50px_rgba(238,189,43,0.5)] px-16 py-4 rounded transition-all transform hover:-translate-y-1"
-                                onClick={onMenu}
-                            >
-                                <span className="text-xl uppercase tracking-[0.4em] font-black text-primary transition-colors">Order Now</span>
-                                <span className="material-symbols-outlined text-primary group-hover:translate-x-3 transition-transform text-3xl font-bold">arrow_forward</span>
-                            </button>
-                        </div>
+                    <div style={{ marginTop: '5.5rem' }}>
+                        <button
+                            onClick={onMenu}
+                            className="luxury-button"
+                            style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '1.2rem',
+                                border: '1px solid rgba(250, 209, 77, 0.4)',
+                                padding: '1.1rem 3.5rem',
+                                background: 'transparent',
+                                color: '#FAD14D',
+                                fontSize: '0.7rem',
+                                letterSpacing: '0.6em',
+                                textTransform: 'uppercase',
+                                fontWeight: 500,
+                                cursor: 'pointer',
+                                transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                                boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
+                            }}
+                        >
+                            <span>Explore Menu</span>
+                            <span className="material-symbols-outlined" style={{ fontSize: '1.2rem', opacity: 0.8 }}>east</span>
+                        </button>
                     </div>
                 </main>
 
                 {/* Footer */}
+
                 <footer className="relative z-20 w-full px-12 pb-12 flex items-end justify-between">
                     <div className="hidden lg:flex flex-col gap-6 text-white/30">
                         <a className="hover:text-primary transition-colors flex items-center gap-3 text-[10px] uppercase tracking-widest" href="#">
@@ -143,7 +157,7 @@ const HomePage: React.FC<HomePageProps> = ({ onMenu, onReservations, onAI }) => 
                     <div className="hidden lg:flex flex-col items-end gap-3 text-right">
                         <div className="flex items-center gap-2 text-primary">
                             <span className="material-symbols-outlined text-sm">location_on</span>
-                            <span className="text-xs font-bold uppercase tracking-[0.2em]">Seoul Cyberpunk District</span>
+                            <span className="text-xs font-bold uppercase tracking-[0.2em]">Seoul Historic District</span>
                         </div>
                         <div className="text-[10px] text-white/40 uppercase tracking-[0.25em]">Flagship Store | Open 18:00 - 04:00</div>
                     </div>
@@ -196,9 +210,9 @@ const HomePage: React.FC<HomePageProps> = ({ onMenu, onReservations, onAI }) => 
                         <div className="aspect-[4/5] rounded-none border border-white/10 overflow-hidden relative group">
                             <div className="absolute inset-0 bg-[#0a0a0a]">
                                 <img
-                                    src="https://images.unsplash.com/photo-1547191783-94d5f8f6d8b1?auto=format&fit=crop&q=80&w=1000"
+                                    src="/history.jpg"
                                     alt="Traditional Hanok Architecture"
-                                    className="w-full h-full object-cover opacity-50 grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000"
+                                    className="w-full h-full object-cover group-hover:scale-105 transition-all duration-1000"
                                 />
                             </div>
                             <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent"></div>

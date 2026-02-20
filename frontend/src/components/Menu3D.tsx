@@ -7,6 +7,7 @@ export interface Menu3DProps {
     addToCart: (id: string) => void;
     onOpenTerminal: () => void;
     onOpenAI: () => void;
+    onHistory: () => void;
 }
 
 const Menu3D: React.FC<Menu3DProps> = ({
@@ -14,83 +15,85 @@ const Menu3D: React.FC<Menu3DProps> = ({
     cart,
     addToCart,
     onOpenTerminal,
-    onOpenAI
+    onOpenAI,
+    onHistory
 }) => {
     const scrollRef = useRef<HTMLDivElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
 
     const [ activeCategory, setActiveCategory ] = useState('All');
+    const [ selectedDish, setSelectedDish ] = useState<any>(null);
 
     const fullMenu = [
         {
             id: 'm1', name: 'Gimbap', price: 299, category: 'Appetizers', image: '/gimbab.jpeg',
             subtitle: 'Tradition', description: 'Hand-rolled harmony of seasoned rice, vibrant vegetables, and cured beef.',
-            tags: [ '85°C Serv.', '12 min prep' ]
+            tags: [ '85°C Serv.', '12 min prep' ], isVeg: false, servingSize: '1 Person', quantity: '8 Pieces'
         },
         {
             id: 'm2', name: 'Mandu', price: 349, category: 'Appetizers', image: 'https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?auto=format&fit=crop&q=80&w=400',
             subtitle: 'Handmade', description: 'Steam-exploded dumplings filled with seasoned pork and spring onions.',
-            tags: [ 'Steamed', 'Juicy' ]
+            tags: [ 'Steamed', 'Juicy' ], isVeg: false, servingSize: '1-2 People', quantity: '6 Pieces'
         },
         {
             id: 'm3', name: 'Tteokbokki', price: 329, category: 'Appetizers', image: '/ricecakes.jpeg',
             subtitle: 'Glow of Seoul', description: 'Chewy rice cylinders in a volcanic gochujang and honey glaze.',
-            tags: [ 'Spicy High', '15 min prep' ]
+            tags: [ 'Spicy High', '15 min prep' ], isVeg: true, servingSize: '1-2 People', quantity: '1 Bowl'
         },
         {
             id: 'm4', name: 'Ramen', price: 399, category: 'Main', image: '/ramen.jpeg',
             subtitle: 'Aged 48h Broth', description: 'Intense bone marrow reduction, house noodles, and aged chili paste.',
-            tags: [ 'Intense', 'Signature' ]
+            tags: [ 'Intense', 'Signature' ], isVeg: false, servingSize: '1 Person', quantity: '1 Large Bowl'
         },
         {
             id: 'm5', name: 'Bibimbap', price: 499, category: 'Main', image: '/bibimbap.jpeg',
             subtitle: 'The Art of Mix', description: 'Sizzling dolsot bowl with colorful vegetables and house gochujang.',
-            tags: [ 'Balanced', 'Popular' ], verified: true
+            tags: [ 'Balanced', 'Popular' ], verified: true, isVeg: true, servingSize: '1 Person', quantity: '1 Stone Bowl'
         },
         {
-            id: 'm6', name: 'Bulgogi', price: 699, category: 'Main', image: 'https://images.unsplash.com/photo-1594221708779-948211442050?auto=format&fit=crop&q=80&w=400',
+            id: 'm6', name: 'Bulgogi', price: 699, category: 'Main', image: '/bulgogi.jpg',
             subtitle: 'Traditional BBQ', description: 'Thinly sliced ribeye steeped in a luxury pear and garlic marinade.',
-            tags: [ 'Premium Beef', '20 min prep' ]
+            tags: [ 'Premium Beef', '20 min prep' ], isVeg: false, servingSize: '2 People', quantity: '250g Beef'
         },
         {
             id: 'm7', name: 'Japchae', price: 429, category: 'Main', image: '/palillos.jpeg',
             subtitle: 'Crystal Harmony', description: 'Sweet and savory stir-fried glass noodles with forest mushrooms.',
-            tags: [ 'Savory', 'Festive' ]
+            tags: [ 'Savory', 'Festive' ], isVeg: true, servingSize: '2 People', quantity: '1 Plate'
         },
         {
             id: 'm8', name: 'Kimchi Jjigae', price: 449, category: 'Stews', image: '/kimchi.jpeg',
             subtitle: 'Soul Stew', description: 'Traditional spicy soup with aged kimchi, silken tofu, and pork belly.',
-            tags: [ 'Spicy', 'Winter Soul' ]
+            tags: [ 'Spicy', 'Winter Soul' ], isVeg: false, servingSize: '1-2 People', quantity: '1 Pot'
         },
         {
-            id: 'm9', name: 'Sundubu Jjigae', price: 429, category: 'Stews', image: 'https://images.unsplash.com/photo-1583214731093-1ac19abb022a?auto=format&fit=crop&q=80&w=400',
+            id: 'm9', name: 'Sundubu Jjigae', price: 429, category: 'Stews', image: '/Sundubu-Jjigae.jpg',
             subtitle: 'Soft Silken', description: 'Cloud-like tofu swirling in a spicy, oceanic broth with fresh seafood.',
-            tags: [ 'Classic Stew', '15 min prep' ]
+            tags: [ 'Classic Stew', '15 min prep' ], isVeg: false, servingSize: '1-2 People', quantity: '1 Pot'
         },
         {
             id: 'm10', name: 'Korean FC', price: 549, category: 'Main', image: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&q=80&w=400',
             subtitle: 'Cloud Crunch', description: 'Double-fried perfection glazed in garlic-soy or spicy gochujang.',
-            tags: [ 'Extra Crispy', 'Sharing' ]
+            tags: [ 'Extra Crispy', 'Sharing' ], isVeg: false, servingSize: '2 People', quantity: '8 Pieces'
         },
         {
-            id: 'm11', name: 'Pajeon', price: 399, category: 'Appetizers', image: '/pajeon_premium.png',
+            id: 'm11', name: 'Pajeon', price: 399, category: 'Appetizers', image: '/pajeon.jpg',
             subtitle: 'Crispy Rain', description: 'Savory pancake with scallions and assorted seafood.',
-            tags: [ 'Crispy', 'Savory' ]
+            tags: [ 'Crispy', 'Savory' ], isVeg: false, servingSize: '2 People', quantity: '1 Pancake'
         },
         {
             id: 'm12', name: 'Kimchi Fried Rice', price: 479, category: 'Main', image: '/kimchifriendrice.jpeg',
             subtitle: 'Street Classic', description: 'Wok-fired rice with spicy kimchi, spam, and a sunny-side up egg.',
-            tags: [ 'Wok-hei', 'Comfort' ]
+            tags: [ 'Wok-hei', 'Comfort' ], isVeg: false, servingSize: '1 Person', quantity: '1 Bowl'
         },
         {
-            id: 'm13', name: 'Soju Original', price: 499, category: 'Drinks', image: 'https://images.unsplash.com/photo-1618392135061-07ee4b72661c?auto=format&fit=crop&q=80&w=400',
+            id: 'm13', name: 'Soju Original', price: 499, category: 'Drinks', image: '/soju.jpeg',
             subtitle: 'Spirit of Korea', description: 'Crystal clear distilled rice liquor, best served ice cold.',
-            tags: [ 'Chilled', '17% ABV' ]
+            tags: [ 'Chilled', '17% ABV' ], isVeg: true, servingSize: '2-3 People', quantity: '360ml Bottle'
         },
         {
-            id: 'm14', name: 'Barley Tea', price: 149, category: 'Drinks', image: 'https://images.unsplash.com/photo-1594631252845-29fc4586216c?auto=format&fit=crop&q=80&w=400',
+            id: 'm14', name: 'Barley Tea', price: 149, category: 'Drinks', image: '/barley tea.jpg',
             subtitle: 'Daily Brew', description: 'Roasted barley infusion, nutty and caffeine-free comfort.',
-            tags: [ 'Hot/Cold', 'Healthy' ]
+            tags: [ 'Hot/Cold', 'Healthy' ], isVeg: true, servingSize: '1 Person', quantity: '1 Cup'
         },
     ];
 
@@ -173,7 +176,7 @@ const Menu3D: React.FC<Menu3DProps> = ({
                         >
                             AI Recommendations
                         </a>
-                        <a className="text-white/60 hover:text-primary transition-colors text-xs font-bold tracking-[0.2em] uppercase" href="#" onClick={(e) => e.preventDefault()}>History</a>
+                        <a className="text-white/60 hover:text-primary transition-colors text-xs font-bold tracking-[0.2em] uppercase cursor-pointer" onClick={(e) => { e.preventDefault(); onHistory(); }}>History</a>
                     </nav>
 
                     <div className="flex items-center gap-6">
@@ -290,7 +293,7 @@ const Menu3D: React.FC<Menu3DProps> = ({
 
                     {/* Entire Menu Section with AI Sidebar */}
                     <div id="entire-menu" className="relative z-10 w-full px-6 lg:px-12 py-32 bg-background-dark/50 backdrop-blur-2xl border-t border-white/5 mt-20">
-                        <div className="max-w-[1600px] mx-auto">
+                        <div className="w-full mx-auto">
                             <div className="flex flex-col lg:flex-row gap-16">
 
                                 {/* Left: Main Menu Grid */}
@@ -331,7 +334,7 @@ const Menu3D: React.FC<Menu3DProps> = ({
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                                         {filteredMenu.map((item) => (
-                                            <div key={item.id} className="group relative bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 border-l-4 hover:border-l-primary hover:border-primary/30 rounded-r-2xl rounded-l-none p-5 transition-all duration-500">
+                                            <div key={item.id} className="group relative bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 border-l-4 hover:border-l-primary hover:border-primary/30 rounded-r-2xl rounded-l-none p-3 transition-all duration-500">
                                                 <div className="flex items-center gap-5">
                                                     <div className="relative size-20 flex-none rounded-xl overflow-hidden shadow-2xl group-hover:scale-110 transition-transform duration-500 ring-1 ring-white/10 group-hover:ring-primary/50">
                                                         <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
@@ -341,18 +344,29 @@ const Menu3D: React.FC<Menu3DProps> = ({
                                                     </div>
                                                     <div className="flex-1 min-w-0">
                                                         <div className="flex items-center justify-between mb-1 gap-2">
-                                                            <h4 className="text-base font-bold text-white/90 group-hover:text-primary transition-colors truncate">{item.name}</h4>
+                                                            <div className="flex items-center gap-2 truncate">
+                                                                <h4 className="text-lg font-bold text-white/90 group-hover:text-primary transition-colors truncate">{item.name}</h4>
+                                                                <div className={`border ${(item as any).isVeg ? 'border-green-500' : 'border-red-500'} size-3 p-[1px] flex items-center justify-center rounded-[2px] flex-none`}>
+                                                                    <div className={`size-1.5 rounded-full ${(item as any).isVeg ? 'bg-green-500' : 'bg-red-500'}`}></div>
+                                                                </div>
+                                                            </div>
                                                             <span className="text-sm font-black text-primary flex-none">₹{item.price}</span>
                                                         </div>
                                                         <p className="text-[9px] text-white/40 uppercase tracking-widest mb-2">{item.category}</p>
-                                                        <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-1 group-hover:translate-y-0">
+                                                        <div className="mt-2 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-1 group-hover:translate-y-0 relative z-10">
                                                             <button
                                                                 onClick={() => addToCart(item.id)}
-                                                                className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-tighter bg-primary text-background-dark px-3 py-1 rounded-sm hover:brightness-110 active:scale-95 transition-all"
+                                                                className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-tighter bg-primary text-background-dark px-3 py-1.5 rounded-sm hover:brightness-110 active:scale-95 transition-all shadow-lg"
                                                             >
-                                                                Add {cart[ item.id ] > 0 && <span className="bg-background-dark text-white px-1.5 rounded-full ml-1">{cart[ item.id ]}</span>}
+                                                                <span className="material-symbols-outlined text-[14px]">add_shopping_cart</span>
+                                                                Add to Order {cart[ item.id ] > 0 && <span className="bg-background-dark text-white px-1.5 rounded-full ml-1">{cart[ item.id ]}</span>}
                                                             </button>
-                                                            <button className="text-[8px] font-black uppercase tracking-tighter border border-white/10 text-white/60 px-2 py-1 rounded-sm hover:bg-white/10 transition-colors">Details</button>
+                                                            <button
+                                                                onClick={() => setSelectedDish(item)}
+                                                                className="text-[10px] font-black uppercase tracking-widest border border-white/20 text-white/60 px-3 py-1.5 rounded-sm hover:bg-white/10 hover:text-white transition-all flex items-center justify-center"
+                                                            >
+                                                                Details
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -406,7 +420,60 @@ const Menu3D: React.FC<Menu3DProps> = ({
                     <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
                 </footer>
             </div>
-        </div>
+
+            {/* Dish Details Modal */}
+            {
+                selectedDish && (
+                    <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onClick={() => setSelectedDish(null)}>
+                        <div className="bg-background-dark/95 border border-white/10 rounded-3xl max-w-lg w-full p-8 relative shadow-[0_0_50px_rgba(0,0,0,0.5)] transform animate-in fade-in zoom-in-95 duration-200" onClick={e => e.stopPropagation()}>
+                            <button onClick={() => setSelectedDish(null)} className="absolute top-6 right-6 text-white/40 hover:text-white transition-colors">
+                                <span className="material-symbols-outlined text-2xl">close</span>
+                            </button>
+
+                            <div className="flex flex-col items-center text-center">
+                                <div className="relative size-40 rounded-full mb-6 p-1 bg-gradient-to-br from-white/10 to-white/0">
+                                    <img src={selectedDish.image} alt={selectedDish.name} className="w-full h-full object-cover rounded-full shadow-2xl" />
+                                </div>
+
+                                <h3 className="text-4xl font-display font-bold text-white mb-2 italic">{selectedDish.name}</h3>
+                                <div className="flex items-center gap-2 mb-6">
+                                    <span className="text-primary font-black text-xl">₹{selectedDish.price}</span>
+                                    <span className="text-white/20">|</span>
+                                    <span className="text-white/60 text-xs uppercase tracking-widest">{selectedDish.category}</span>
+                                </div>
+
+                                <p className="text-white/70 text-base leading-relaxed mb-8 max-w-sm">{selectedDish.description}</p>
+
+                                <div className="grid grid-cols-2 gap-4 w-full mb-8">
+                                    <div className="bg-white/5 border border-white/5 rounded-2xl p-4 text-center group hover:bg-white/10 transition-colors">
+                                        <div className="mb-2 text-white/40 group-hover:text-primary transition-colors">
+                                            <span className="material-symbols-outlined">group</span>
+                                        </div>
+                                        <span className="block text-white/40 text-[10px] uppercase tracking-widest mb-1">Serving Size</span>
+                                        <span className="text-white font-bold">{selectedDish.servingSize}</span>
+                                    </div>
+                                    <div className="bg-white/5 border border-white/5 rounded-2xl p-4 text-center group hover:bg-white/10 transition-colors">
+                                        <div className="mb-2 text-white/40 group-hover:text-primary transition-colors">
+                                            <span className="material-symbols-outlined">restaurant</span>
+                                        </div>
+                                        <span className="block text-white/40 text-[10px] uppercase tracking-widest mb-1">Quantity/Portion</span>
+                                        <span className="text-white font-bold">{selectedDish.quantity}</span>
+                                    </div>
+                                </div>
+
+                                <button
+                                    onClick={() => { addToCart(selectedDish.id); setSelectedDish(null); }}
+                                    className="w-full bg-primary hover:bg-white text-background-dark font-black py-4 rounded-xl uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3 shadow-[0_0_20px_rgba(238,189,43,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]"
+                                >
+                                    <span className="material-symbols-outlined">add_shopping_cart</span>
+                                    Add to Order
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+        </div >
     );
 };
 

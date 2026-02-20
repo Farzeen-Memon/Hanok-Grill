@@ -12,6 +12,7 @@ function App() {
     const [ showAIModal, setShowAIModal ] = useState(false);
     const [ showHanokPic, setShowHanokPic ] = useState(false);
     const [ cart, setCart ] = useState<Record<string, number>>({});
+    const [ initialScrollSection, setInitialScrollSection ] = useState<string | null>(null);
 
     const addToCart = (id: string) => {
         setCart(prev => ({
@@ -49,11 +50,18 @@ function App() {
             case 'menu-3d':
                 return (
                     <Menu3D
-                        onBack={() => setCurrentPage('home')}
+                        onBack={() => {
+                            setInitialScrollSection(null);
+                            setCurrentPage('home');
+                        }}
                         cart={cart}
                         addToCart={addToCart}
                         onOpenTerminal={() => setCurrentPage('order')}
                         onOpenAI={() => setShowAIModal(true)}
+                        onHistory={() => {
+                            setInitialScrollSection('history');
+                            setCurrentPage('home');
+                        }}
                     />
                 );
             default:
@@ -62,6 +70,7 @@ function App() {
                         onMenu={() => setCurrentPage('menu-3d')}
                         onReservations={() => setCurrentPage('reservation')}
                         onAI={() => setShowAIModal(true)}
+                        initialScrollSection={initialScrollSection}
                     />
                 );
         }

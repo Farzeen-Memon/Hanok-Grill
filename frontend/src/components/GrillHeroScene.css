@@ -1,0 +1,201 @@
+/* ================================================================
+   GrillHeroScene.css
+   Refined Korean Fine Dining Style
+   Ivory-Gold Moon · Muted Cherry Blossoms · Charcoal Skies
+   ================================================================ */
+
+/* ── ROOT ──────────────────────────────────────────────────── */
+.grillhero-root.moon-night {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #0B0B0D;
+    /* Neutral charcoal base */
+}
+
+/* ── NIGHT SKY GRADIENT — Refined Charcoal Vertical ────────── */
+.night-sky {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 70% 70% at 75% 50%,
+            rgba(20, 20, 20, 0.25) 0%,
+            transparent 70%),
+        linear-gradient(180deg,
+            #0B0B0D 0%,
+            #101014 50%,
+            #000000 100%);
+    z-index: 0;
+}
+
+/* ── MOON WRAP ──────────────────────────────────────────────── */
+.hero-moon-wrap {
+    position: absolute;
+    /* Positioned on the right, slightly reduced size for refined balance */
+    top: 53%;
+    right: 5vw;
+    transform: translateY(-50%);
+    width: 66vh;
+    /* Reduced from 70vh */
+    height: 66vh;
+    /* Reduced from 70vh */
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ── MOON — Reimagined as a Silk Lantern / Aged Rice Paper ─────── */
+.hero-moon {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    /* Muted gold with a more lantern-like core illumination */
+    background: radial-gradient(circle at 45% 40%,
+            #F2EBDC 0%,
+            /* Silk core */
+            #E6CFA3 35%,
+            /* Mid parchment */
+            #D4B483 70%,
+            /* Aged edge */
+            #A68B5B 100%);
+    /* Deep parchment edge */
+    box-shadow:
+        /* Soft external glow */
+        0 0 50px rgba(180, 150, 100, 0.15),
+        0 0 80px rgba(180, 150, 100, 0.05),
+        /* Uneven internal edge darkening - "The Lantern Shadow" */
+        inset -10px -10px 30px rgba(0, 0, 0, 0.3),
+        inset 10px 10px 40px rgba(255, 255, 255, 0.05),
+        /* Very soft warm vignette around moon edge */
+        inset 0 0 100px rgba(130, 90, 40, 0.2);
+    overflow: hidden;
+}
+
+/* Paper / Silk fiber texture overlay */
+.moon-texture {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    /* Simulating rice paper pulp and fibers */
+    background:
+        radial-gradient(circle at 30% 30%, transparent 60%, rgba(0, 0, 0, 0.05) 100%),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.05' numOctaves='2' stitchTiles='stitch'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)' opacity='0.2'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+    opacity: 0.15;
+    pointer-events: none;
+}
+
+/* Aged Rice Paper Grain Overlay */
+.moon-glow-inner {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    /* Fine-grained texture (2% feel) */
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+    opacity: 0.02;
+    /* 2% grain as requested */
+    mix-blend-mode: overlay;
+    pointer-events: none;
+}
+
+/* ── CHERRY BLOSSOM LAYER ─────────────────────────────────── */
+.cherry-blossom-layer {
+    position: absolute;
+    top: -20%;
+    /* Shifted up */
+    right: -15%;
+    bottom: -10%;
+    left: -15%;
+    z-index: 10;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: blossomFloat 15s ease-in-out infinite;
+}
+
+.cherry-blossom-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* 
+       Refined filters for:
+       - 10-15% reduced saturation
+       - Increased branch contrast to near-black
+       - Cleaner ink feel (via contrast/brightness)
+    */
+    filter:
+        brightness(0.85) saturate(0.65) contrast(1.3) drop-shadow(0 0 10px rgba(0, 0, 0, 0.6));
+    opacity: 0.92;
+}
+
+@keyframes blossomFloat {
+
+    0%,
+    100% {
+        transform: scale(1) translate(0, 0);
+    }
+
+    50% {
+        transform: scale(1.01) translate(-3px, -5px);
+    }
+}
+
+/* ── DRIFTING PETALS — Whisper Motion ────────────────────────── */
+.petals-container {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    /* Brought to the absolute front to fall over the moon and blossoms */
+}
+
+.drifting-petal {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--petal-shade, #B21F2D);
+    /* Randomized shades for organic variety */
+    border-radius: 50% 0 50% 50%;
+    /* Petal-like shape */
+    opacity: 0;
+    filter: blur(1px);
+    animation: drift linear infinite;
+}
+
+@keyframes drift {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 0.6;
+    }
+
+    85% {
+        opacity: 0.2;
+    }
+
+    100% {
+        /* Uses custom variable for individualized horizontal drift */
+        transform: translate(var(--x-drift, -15vw), 90vh) rotate(540deg);
+        opacity: 0;
+    }
+}
+
+/* ── VIGNETTE — Balanced Weight ──────────────────────────────── */
+.hero-vignette {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 90% 90% at 55% 48%, transparent 45%, rgba(5, 5, 7, 0.85) 100%),
+        /* Slightly darkened left side to balance moon weight */
+        linear-gradient(to right, rgba(2, 2, 4, 0.8) 0%, transparent 55%);
+    pointer-events: none;
+    z-index: 40;
+}
