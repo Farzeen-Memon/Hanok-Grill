@@ -65,10 +65,7 @@ const HomePage: React.FC<HomePageProps> = ({ onMenu, onReservations, onAI, initi
                     </div>
 
                     <div className="flex items-center gap-6">
-                        <button className="hidden sm:flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-bold text-white/90 hover:text-primary transition-colors">
-                            <span className="material-symbols-outlined text-[20px]">account_circle</span>
-                            Login
-                        </button>
+
                         <button
                             className="bg-primary hover:bg-white text-background-dark px-10 py-3 rounded-none text-xs uppercase tracking-[0.2em] font-black transition-all transform hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(179,139,47,0.3)]"
                             onClick={onReservations}

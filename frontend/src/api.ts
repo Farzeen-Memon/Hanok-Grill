@@ -45,7 +45,9 @@ export async function createReservation(reservationData: any) {
     });
 
     if (!response.ok) {
-        throw new Error('Failed to create reservation');
+        // Capture the actual server error message and throw it
+        const errBody = await response.json().catch(() => ({}));
+        throw new Error(errBody.message || `Server error: ${response.status}`);
     }
 
     return response.json();

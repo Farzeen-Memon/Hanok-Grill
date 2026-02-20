@@ -22,15 +22,15 @@ const menuItemsData: CartItemData[] = [
     { id: 'm3', name: 'Tteokbokki', price: 329, image: '/ricecakes.jpeg' },
     { id: 'm4', name: 'Ramen', price: 399, image: '/ramen.jpeg' },
     { id: 'm5', name: 'Bibimbap', price: 499, image: '/bibimbap.jpeg' },
-    { id: 'm6', name: 'Bulgogi', price: 699, image: '/bulgogi_premium.png' },
+    { id: 'm6', name: 'Bulgogi', price: 699, image: '/bulgogi.jpg' },
     { id: 'm7', name: 'Japchae', price: 429, image: '/palillos.jpeg' },
     { id: 'm8', name: 'Kimchi Jjigae', price: 449, image: '/kimchi.jpeg' },
-    { id: 'm9', name: 'Sundubu Jjigae', price: 429, image: '/sundubu_premium.png' },
+    { id: 'm9', name: 'Sundubu Jjigae', price: 429, image: '/Sundubu-Jjigae.jpg' },
     { id: 'm10', name: 'Korean FC', price: 549, image: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&q=80&w=400' },
-    { id: 'm11', name: 'Pajeon', price: 399, image: '/pajeon_premium.png' },
+    { id: 'm11', name: 'Pajeon', price: 399, image: '/pajeon.jpg' },
     { id: 'm12', name: 'Kimchi Fried Rice', price: 479, image: '/kimchifriendrice.jpeg' },
-    { id: 'm13', name: 'Soju Original', price: 499, image: 'https://images.unsplash.com/photo-1618392135061-07ee4b72661c?auto=format&fit=crop&q=80&w=400' },
-    { id: 'm14', name: 'Barley Tea', price: 149, image: 'https://images.unsplash.com/photo-1594631252845-29fc4586216c?auto=format&fit=crop&q=80&w=400' },
+    { id: 'm13', name: 'Soju Original', price: 499, image: '/soju.jpeg' },
+    { id: 'm14', name: 'Barley Tea', price: 149, image: '/barley tea.jpg' },
 ];
 
 declare global {

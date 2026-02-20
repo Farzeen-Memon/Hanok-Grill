@@ -2,6 +2,7 @@
 const express = require("express");
 const Table = require("../models/Table");
 const Reservation = require("../models/Reservation");
+const { sendReservationEmail } = require("../services/emailService");
 
 const router = express.Router();
 
@@ -121,6 +122,21 @@ router.post("/", async (req, res) => {
       slot,
       table: finalTableId
     });
+
+    // Fetch the table document to get its human-readable name (e.g. "T2")
+    const tableDoc = await Table.findById(finalTableId);
+
+    // Fire-and-forget email — does not block the response
+    sendReservationEmail({
+      name,
+      email,
+      phone,
+      tableNumber: tableDoc ? tableDoc.name : finalTableId.toString(),
+      slot,
+      date: finalDate,
+      guests,
+      seating
+    }).catch(err => console.error('[Email] Unexpected error:', err.message));
 
     res.status(201).json({ message: "Reservation created", reservation, table: finalTableId });
   } catch (err) {

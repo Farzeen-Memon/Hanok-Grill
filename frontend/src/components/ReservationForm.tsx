@@ -59,10 +59,17 @@ export default function ReservationForm({ onBack }: ReservationFormProps) {
                         paymentId: response.razorpay_payment_id
                     });
 
-                    alert(`✅ Reservation confirmed!\nReservation ID: ${res._id || 'Confirmed'}\nTable Reserved for: ${formData.name}`);
+                    alert(`✅ Reservation confirmed!\nReservation ID: ${res.reservation?._id || 'Confirmed'}\nTable: ${res.table || 'Assigned'}\nBooked for: ${formData.name}\nSlot: ${formData.slot}`);
                     onBack();
-                } catch (error) {
-                    alert('❌ Payment successful but failed to save reservation. Please contact us.');
+                } catch (error: any) {
+                    let msg = 'Failed to save reservation.';
+                    try {
+                        const errBody = JSON.parse(error.message);
+                        msg = errBody.message || msg;
+                    } catch {
+                        msg = error.message || msg;
+                    }
+                    alert(`❌ ${msg}\n\nYour payment was captured. Please contact us with your payment ID:\n${response.razorpay_payment_id}`);
                 } finally {
                     setLoading(false);
                 }

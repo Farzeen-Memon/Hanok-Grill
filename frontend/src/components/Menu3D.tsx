@@ -238,7 +238,7 @@ const Menu3D: React.FC<Menu3DProps> = ({
                             {fullMenu.filter(item => item.category !== 'Drinks').map((item) => (
                                 <div key={item.id} className="relative flex-none group transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]">
                                     <div className="absolute -inset-12 bg-primary/15 rounded-3xl blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                                    <div className="w-[340px] group-hover:w-[480px] h-[550px] group-hover:h-[650px] bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 group-hover:border-primary/40 flex flex-col items-center p-10 group-hover:p-14 transition-all duration-700 shadow-[0_0_50px_rgba(238,189,43,0)] group-hover:shadow-[0_40px_100px_rgba(238,189,43,0.15)] overflow-hidden">
+                                    <div className="w-[340px] group-hover:w-[480px] h-[550px] group-hover:h-[650px] bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 group-hover:border-primary/40 flex flex-col items-center p-10 group-hover:pb-8 group-hover:px-14 group-hover:pt-14 transition-all duration-700 shadow-[0_0_50px_rgba(238,189,43,0)] group-hover:shadow-[0_40px_100px_rgba(238,189,43,0.15)] justify-between">
                                         {(item as any).verified && (
                                             <div className="absolute top-10 right-10 flex items-center gap-2 text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20">
                                                 <span className="material-symbols-outlined text-base font-bold">verified</span>
@@ -249,10 +249,10 @@ const Menu3D: React.FC<Menu3DProps> = ({
                                                 <span className="material-symbols-outlined text-base font-bold">star</span>
                                             </div>
                                         )}
-                                        <div className="relative w-full h-[220px] group-hover:h-[300px] mb-8 flex items-center justify-center transition-all duration-700">
+                                        <div className="relative w-full h-[220px] group-hover:h-[300px] mb-8 flex items-center justify-center transition-all duration-700 overflow-hidden rounded-full flex-shrink-0">
                                             <img
                                                 alt={item.name}
-                                                className="w-full h-full object-cover rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.5)] group-hover:shadow-[0_40px_80px_rgba(0,0,0,0.9)] ring-4 ring-white/5 group-hover:ring-12 group-hover:ring-primary/25 scale-110 group-hover:scale-125 transition-all duration-700"
+                                                className="w-full h-full object-cover rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.5)] group-hover:shadow-[0_40px_80px_rgba(0,0,0,0.9)] ring-4 ring-white/5 group-hover:ring-primary/25 scale-110 group-hover:scale-125 transition-all duration-700"
                                                 src={item.image}
                                             />
                                         </div>
@@ -265,17 +265,17 @@ const Menu3D: React.FC<Menu3DProps> = ({
                                                     <div key={tag} className="text-[9px] text-white/50 border border-white/10 px-3 py-1.5 uppercase font-bold tracking-[0.2em] whitespace-nowrap">{tag}</div>
                                                 ))}
                                             </div>
+                                        </div>
 
-                                            {/* Add to Order Button for Specials */}
-                                            <div className="mt-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 w-full px-4">
-                                                <button
-                                                    onClick={() => addToCart(item.id)}
-                                                    className="w-full bg-primary hover:bg-white text-background-dark py-3.5 rounded-xl text-sm font-black uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-3"
-                                                >
-                                                    <span className="material-symbols-outlined text-base">add_shopping_cart</span>
-                                                    Add to Order {cart[ item.id ] > 0 && <span className="bg-background-dark text-white size-6 rounded-full flex items-center justify-center text-[9px]">{cart[ item.id ]}</span>}
-                                                </button>
-                                            </div>
+                                        {/* Add to Order Button for Specials - pinned to bottom */}
+                                        <div className="flex-shrink-0 w-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pt-4">
+                                            <button
+                                                onClick={() => addToCart(item.id)}
+                                                className="w-full bg-primary hover:bg-white text-background-dark py-3.5 rounded-xl text-sm font-black uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-3"
+                                            >
+                                                <span className="material-symbols-outlined text-base">add_shopping_cart</span>
+                                                Add to Order {cart[ item.id ] > 0 && <span className="bg-background-dark text-white size-6 rounded-full flex items-center justify-center text-[9px]">{cart[ item.id ]}</span>}
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
