@@ -37,9 +37,9 @@ const HomePage: React.FC<HomePageProps> = ({ onMenu, onReservations, onAI, initi
                 <GrillHeroScene />
 
                 {/* Navigation Bar - Increased z-index and opacity control */}
-                <nav className={`fixed top-0 left-0 w-full z-[1000] px-8 py-6 flex items-center justify-between border-b border-white/5 transition-all duration-500 ${isScrolled ? 'bg-[#080808]/95 backdrop-blur-3xl py-4' : 'glassmorphism'}`}>
+                <nav className={`fixed top-0 left-0 w-full z-[1000] px-8 py-3 flex items-center justify-between border-b border-white/5 transition-all duration-500 ${isScrolled ? 'bg-[#080808]/95 backdrop-blur-3xl py-2' : 'glassmorphism'}`}>
                     <div className="flex items-center gap-4 group cursor-pointer">
-                        <div className="relative size-12 text-[#eebd2b] opacity-90 transition-opacity group-hover:opacity-100">
+                        <div className="relative size-6 text-[#eebd2b] opacity-90 transition-opacity group-hover:opacity-100">
                             <svg className="w-full h-full" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M50 5C50 5 35 25 35 45C35 65 50 85 50 85C50 85 65 65 65 45C65 25 50 5 50 5Z" fill="currentColor" fillOpacity="0.15"></path>
                                 <path d="M50 15C50 15 40 30 40 45C40 60 50 75 50 75C50 75 60 60 60 45C60 30 50 15 50 15Z" fill="currentColor" fillOpacity="0.4"></path>
@@ -47,17 +47,15 @@ const HomePage: React.FC<HomePageProps> = ({ onMenu, onReservations, onAI, initi
                             </svg>
                         </div>
                         <div className="flex flex-col leading-none">
-                            <span className="text-[#C9A227] font-display text-2xl font-bold tracking-[0.35em] uppercase">Hanok</span>
-                            <span className="text-white/60 font-display text-xs tracking-[0.8em] uppercase font-bold mt-2">Grill</span>
+                            <span className="text-[#C9A227] font-display text-base font-bold tracking-[0.35em] uppercase">Hanok</span>
+                            <span className="text-white/60 font-display text-[8px] tracking-[0.8em] uppercase font-bold mt-1">Grill</span>
                         </div>
                     </div>
 
                     <div className="hidden md:flex items-center gap-16">
-                        <button className="text-xs uppercase tracking-[0.3em] font-bold text-white/80 hover:text-primary transition-all hover:tracking-[0.4em] cursor-pointer bg-transparent border-none" onClick={onMenu}>Menu</button>
                         <button className="text-xs uppercase tracking-[0.3em] font-bold text-white/80 hover:text-primary transition-all hover:tracking-[0.4em] cursor-pointer bg-transparent border-none" onClick={onMenu}>Our Specials</button>
-                        <button className="text-xs uppercase tracking-[0.3em] font-bold text-white/80 hover:text-primary transition-all hover:tracking-[0.4em] cursor-pointer bg-transparent border-none" onClick={onMenu}>Entire Menu</button>
-                        <button className="text-xs uppercase tracking-[0.3em] font-bold text-white/80 hover:text-primary transition-all hover:tracking-[0.4em] cursor-pointer bg-transparent border-none flex items-center gap-2" onClick={onAI}>
-                            <span className="material-symbols-outlined text-sm">psychology</span>
+                        <button className="text-xs uppercase tracking-[0.3em] font-bold text-white/80 hover:text-primary transition-all hover:tracking-[0.4em] cursor-pointer bg-transparent border-none" onClick={onMenu}>Menu</button>
+                        <button className="text-xs uppercase tracking-[0.3em] font-bold text-white/80 hover:text-primary transition-all hover:tracking-[0.4em] cursor-pointer bg-transparent border-none" onClick={onAI}>
                             AI Recommendations
                         </button>
                         <button className="text-xs uppercase tracking-[0.3em] font-bold text-white/80 hover:text-primary transition-all hover:tracking-[0.4em] cursor-pointer bg-transparent border-none"
@@ -67,7 +65,7 @@ const HomePage: React.FC<HomePageProps> = ({ onMenu, onReservations, onAI, initi
                     <div className="flex items-center gap-6">
 
                         <button
-                            className="bg-primary hover:bg-white text-background-dark px-10 py-3 rounded-none text-xs uppercase tracking-[0.2em] font-black transition-all transform hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(179,139,47,0.3)]"
+                            className="bg-primary hover:bg-white text-background-dark px-6 py-2 rounded-full text-[10px] uppercase tracking-[0.2em] font-black transition-all transform hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(179,139,47,0.3)]"
                             onClick={onReservations}
                         >
                             Book Table

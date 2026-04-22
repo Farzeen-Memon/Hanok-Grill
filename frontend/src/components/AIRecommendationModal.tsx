@@ -90,13 +90,7 @@ const AIRecommendationModal: React.FC<AIRecommendationModalProps> = ({ onClose, 
                 {step === 'questions' && (
                     <div className="ai-modal-content">
                         <div className="ai-modal-header">
-                            <div className="relative size-12 text-primary fiery-logo-glow">
-                                <svg className="w-full h-full" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M50 5C50 5 35 25 35 45C35 65 50 85 50 85C50 85 65 65 65 45C65 25 50 5 50 5Z" fill="currentColor" fillOpacity="0.2"></path>
-                                    <path d="M50 15C50 15 40 30 40 45C40 60 50 75 50 75C50 75 60 60 60 45C60 30 50 15 50 15Z" fill="currentColor" fillOpacity="0.5"></path>
-                                    <path d="M50 25C50 25 45 35 45 45C45 55 50 65 50 65C50 65 55 55 55 45C55 35 50 25 50 25Z" fill="currentColor"></path>
-                                </svg>
-                            </div>
+
                             <h2 className="ai-modal-title">HANOK AI PICKS</h2>
                             <p className="ai-modal-subtitle">Answer 4 quick questions for personalized recommendations</p>
                         </div>

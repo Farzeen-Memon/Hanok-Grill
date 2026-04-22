@@ -131,7 +131,7 @@ export default function OrderPage({ onBack, cart, updateQuantity, clearCart }: O
                 {/* Header */}
                 <header className="flex items-center justify-between py-10 border-b border-white/5">
                     <button onClick={onBack} className="group flex items-center text-white/40 hover:text-primary transition-all">
-                        <span className="material-symbols-outlined text-4xl group-hover:-translate-x-2 transition-transform">keyboard_backspace</span>
+                        <span className="material-symbols-outlined text-2xl group-hover:-translate-x-1 transition-transform">keyboard_backspace</span>
                     </button>
 
                     <div className="flex items-center gap-3">

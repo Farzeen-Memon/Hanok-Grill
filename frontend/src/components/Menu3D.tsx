@@ -133,17 +133,17 @@ const Menu3D: React.FC<Menu3DProps> = ({
             {/* Main Container */}
             <div className="relative z-10 flex flex-col h-screen">
                 {/* Header - Now Sticky */}
-                <header className="sticky top-0 z-50 flex items-center justify-between px-10 py-6 border-b border-white/5 backdrop-blur-xl bg-background-dark/80">
+                <header className="sticky top-0 z-50 flex items-center justify-between px-10 py-3 border-b border-white/5 backdrop-blur-xl bg-background-dark/80">
                     <div className="flex items-center gap-10">
                         <button
                             onClick={onBack}
                             className="group flex items-center text-white/40 hover:text-primary transition-all"
                         >
-                            <span className="material-symbols-outlined text-4xl group-hover:-translate-x-2 transition-transform">keyboard_backspace</span>
+                            <span className="material-symbols-outlined text-2xl group-hover:-translate-x-1 transition-transform">keyboard_backspace</span>
                         </button>
 
                         <div className="flex items-center gap-4 group cursor-pointer" onClick={onBack}>
-                            <div className="relative size-10 text-primary fiery-logo-glow">
+                            <div className="relative size-5 text-primary fiery-logo-glow">
                                 <svg className="w-full h-full" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M50 5C50 5 35 25 35 45C35 65 50 85 50 85C50 85 65 65 65 45C65 25 50 5 50 5Z" fill="currentColor" fillOpacity="0.2"></path>
                                     <path d="M50 15C50 15 40 30 40 45C40 60 50 75 50 75C50 75 60 60 60 45C60 30 50 15 50 15Z" fill="currentColor" fillOpacity="0.5"></path>
@@ -151,8 +151,8 @@ const Menu3D: React.FC<Menu3DProps> = ({
                                 </svg>
                             </div>
                             <div className="flex flex-col leading-none">
-                                <span className="text-white font-display text-lg font-bold tracking-[0.2em] uppercase">Hanok</span>
-                                <span className="text-primary font-display text-[10px] tracking-[0.4em] uppercase font-bold">Grill</span>
+                                <span className="text-white font-display text-sm font-bold tracking-[0.2em] uppercase">Hanok</span>
+                                <span className="text-primary font-display text-[7px] tracking-[0.4em] uppercase font-bold">Grill</span>
                             </div>
                         </div>
                     </div>
@@ -168,7 +168,7 @@ const Menu3D: React.FC<Menu3DProps> = ({
                             className="text-white/60 hover:text-primary transition-colors text-xs font-bold tracking-[0.2em] uppercase cursor-pointer"
                             onClick={(e) => { e.preventDefault(); document.getElementById('entire-menu')?.scrollIntoView({ behavior: 'smooth' }); }}
                         >
-                            Entire Menu
+                            Menu
                         </a>
                         <a
                             className="text-white/60 hover:text-primary transition-colors text-xs font-bold tracking-[0.2em] uppercase cursor-pointer"
@@ -186,12 +186,12 @@ const Menu3D: React.FC<Menu3DProps> = ({
                         </div>
                         <button
                             onClick={onOpenTerminal}
-                            className="group relative flex items-center gap-4 bg-primary text-background-dark px-10 py-2.5 rounded-full hover:bg-white transition-all duration-500 shadow-[0_0_30px_rgba(238,189,43,0.4)]"
+                            className="group relative flex items-center gap-2 bg-primary text-background-dark px-5 py-1.5 rounded-full hover:bg-white transition-all duration-500 shadow-[0_0_20px_rgba(238,189,43,0.3)]"
                         >
-                            <span className="material-symbols-outlined font-bold text-xl">shopping_cart</span>
-                            <span className="text-sm font-black tracking-[0.2em] uppercase">Order Terminal</span>
+                            <span className="material-symbols-outlined font-bold text-lg">shopping_cart</span>
+                            <span className="text-[10px] font-black tracking-[0.2em] uppercase">Order Terminal</span>
                             {getTotalItems() > 0 && (
-                                <span className="absolute -top-1 -right-1 size-7 bg-white border-2 border-primary text-primary text-[11px] font-black rounded-full flex items-center justify-center animate-bounce shadow-xl">
+                                <span className="absolute -top-1 -right-1 size-5 bg-white border-2 border-primary text-primary text-[9px] font-black rounded-full flex items-center justify-center animate-bounce shadow-xl">
                                     {getTotalItems()}
                                 </span>
                             )}
@@ -287,7 +287,7 @@ const Menu3D: React.FC<Menu3DProps> = ({
                         className="flex flex-col items-center justify-center -mt-10 mb-20 gap-4 opacity-40 hover:opacity-100 transition-opacity duration-500 cursor-pointer group"
                         onClick={() => document.getElementById('entire-menu')?.scrollIntoView({ behavior: 'smooth' })}
                     >
-                        <span className="text-[10px] uppercase tracking-[0.6em] text-white font-bold">scroll to view entire menu..</span>
+                        <span className="text-[10px] uppercase tracking-[0.6em] text-white font-bold">scroll to view menu..</span>
                         <div className="w-[1px] h-12 bg-gradient-to-b from-primary to-transparent animate-bounce"></div>
                     </div>
 
@@ -316,7 +316,7 @@ const Menu3D: React.FC<Menu3DProps> = ({
                                             </button>
                                             <div>
                                                 <span className="text-primary font-black text-[10px] tracking-[0.5em] uppercase mb-4 block">Selection</span>
-                                                <h3 className="text-6xl font-bold font-display text-white/90">THE ENTIRE MENU</h3>
+                                                <h3 className="text-6xl font-bold font-display text-white/90">THE MENU</h3>
                                             </div>
                                         </div>
                                         <div className="flex gap-4 border-b border-white/10 pb-2 flex-wrap">
@@ -332,38 +332,38 @@ const Menu3D: React.FC<Menu3DProps> = ({
                                         </div>
                                     </div>
 
-                                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4">
                                         {filteredMenu.map((item) => (
-                                            <div key={item.id} className="group relative bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 border-l-4 hover:border-l-primary hover:border-primary/30 rounded-r-2xl rounded-l-none p-3 transition-all duration-500">
-                                                <div className="flex items-center gap-5">
-                                                    <div className="relative size-20 flex-none rounded-xl overflow-hidden shadow-2xl group-hover:scale-110 transition-transform duration-500 ring-1 ring-white/10 group-hover:ring-primary/50">
+                                            <div key={item.id} className="group relative bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 border-l-4 hover:border-l-primary hover:border-primary/30 rounded-r-xl rounded-l-none p-2 transition-all duration-500">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="relative size-16 flex-none rounded-lg overflow-hidden shadow-2xl group-hover:scale-105 transition-transform duration-500 ring-1 ring-white/10 group-hover:ring-primary/50">
                                                         <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                                                         <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer" onClick={() => addToCart(item.id)}>
-                                                            <span className="material-symbols-outlined text-white text-xl">add_shopping_cart</span>
+                                                            <span className="material-symbols-outlined text-white text-base">add_shopping_cart</span>
                                                         </div>
                                                     </div>
                                                     <div className="flex-1 min-w-0">
-                                                        <div className="flex items-center justify-between mb-1 gap-2">
-                                                            <div className="flex items-center gap-2 truncate">
-                                                                <h4 className="text-lg font-bold text-white/90 group-hover:text-primary transition-colors truncate">{item.name}</h4>
-                                                                <div className={`border ${(item as any).isVeg ? 'border-green-500' : 'border-red-500'} size-3 p-[1px] flex items-center justify-center rounded-[2px] flex-none`}>
-                                                                    <div className={`size-1.5 rounded-full ${(item as any).isVeg ? 'bg-green-500' : 'bg-red-500'}`}></div>
+                                                        <div className="flex items-center justify-between mb-0.5 gap-2">
+                                                            <div className="flex items-center gap-1.5 truncate">
+                                                                <h4 className="text-sm font-bold text-white/90 group-hover:text-primary transition-colors truncate">{item.name}</h4>
+                                                                <div className={`border ${(item as any).isVeg ? 'border-green-500' : 'border-red-500'} size-2.5 p-[1px] flex items-center justify-center rounded-[1px] flex-none`}>
+                                                                    <div className={`size-1 rounded-full ${(item as any).isVeg ? 'bg-green-500' : 'bg-red-500'}`}></div>
                                                                 </div>
                                                             </div>
-                                                            <span className="text-sm font-black text-primary flex-none">₹{item.price}</span>
+                                                            <span className="text-xs font-black text-primary flex-none">₹{item.price}</span>
                                                         </div>
-                                                        <p className="text-[9px] text-white/40 uppercase tracking-widest mb-2">{item.category}</p>
-                                                        <div className="mt-2 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-1 group-hover:translate-y-0 relative z-10">
+                                                        <p className="text-[7px] text-white/40 uppercase tracking-widest mb-1.5">{item.category}</p>
+                                                        <div className="mt-1 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-1 group-hover:translate-y-0 relative z-10">
                                                             <button
                                                                 onClick={() => addToCart(item.id)}
-                                                                className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-tighter bg-primary text-background-dark px-3 py-1.5 rounded-sm hover:brightness-110 active:scale-95 transition-all shadow-lg"
+                                                                className="flex items-center gap-1 text-[8px] font-black uppercase tracking-tighter bg-primary text-background-dark px-2 py-1 rounded-sm hover:brightness-110 active:scale-95 transition-all shadow-lg"
                                                             >
-                                                                <span className="material-symbols-outlined text-[14px]">add_shopping_cart</span>
-                                                                Add to Order {cart[ item.id ] > 0 && <span className="bg-background-dark text-white px-1.5 rounded-full ml-1">{cart[ item.id ]}</span>}
+                                                                <span className="material-symbols-outlined text-[12px]">add_shopping_cart</span>
+                                                                Add {cart[ item.id ] > 0 && <span className="bg-background-dark text-white px-1 rounded-full ml-1">{cart[ item.id ]}</span>}
                                                             </button>
                                                             <button
                                                                 onClick={() => setSelectedDish(item)}
-                                                                className="text-[10px] font-black uppercase tracking-widest border border-white/20 text-white/60 px-3 py-1.5 rounded-sm hover:bg-white/10 hover:text-white transition-all flex items-center justify-center"
+                                                                className="text-[8px] font-black uppercase tracking-widest border border-white/20 text-white/60 px-2 py-1 rounded-sm hover:bg-white/10 hover:text-white transition-all flex items-center justify-center"
                                                             >
                                                                 Details
                                                             </button>
