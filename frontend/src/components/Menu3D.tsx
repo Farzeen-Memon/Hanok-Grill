@@ -208,7 +208,7 @@ const Menu3D: React.FC<Menu3DProps> = ({
 
                     {/* Specials Section */}
                     <div className="relative z-10 w-full mb-32 specials-section">
-                        <div className="text-center mb-8">
+                        <div className="text-center mb-2">
                             <span className="text-primary font-black text-[12px] tracking-[0.5em] uppercase mb-2 block font-display">Premium Curation</span>
                             <h2 className="text-5xl font-bold font-display tracking-tight text-white/90">OUR SPECIALS</h2>
                         </div>
@@ -233,23 +233,23 @@ const Menu3D: React.FC<Menu3DProps> = ({
 
                         <div
                             ref={scrollRef}
-                            className="flex overflow-x-auto no-scrollbar gap-16 pb-20 pt-10 px-12 items-center overflow-y-visible"
+                            className="flex overflow-x-auto no-scrollbar gap-8 pb-20 pt-4 px-12 items-center overflow-y-visible"
                         >
                             {fullMenu.filter(item => item.category !== 'Drinks').map((item) => (
                                 <div key={item.id} className="relative flex-none group transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]">
                                     <div className="absolute -inset-12 bg-primary/15 rounded-3xl blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                                    <div className="w-[340px] group-hover:w-[480px] h-[550px] group-hover:h-[650px] bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 group-hover:border-primary/40 flex flex-col items-center p-10 group-hover:pb-8 group-hover:px-14 group-hover:pt-14 transition-all duration-700 shadow-[0_0_50px_rgba(238,189,43,0)] group-hover:shadow-[0_40px_100px_rgba(238,189,43,0.15)] justify-between">
+                                    <div className="w-[220px] group-hover:w-[280px] h-[340px] group-hover:h-[420px] bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 group-hover:border-primary/40 flex flex-col items-center p-5 group-hover:pb-5 group-hover:px-6 group-hover:pt-6 transition-all duration-700 shadow-[0_0_50px_rgba(238,189,43,0)] group-hover:shadow-[0_40px_100px_rgba(238,189,43,0.15)] justify-between">
                                         {(item as any).verified && (
-                                            <div className="absolute top-10 right-10 flex items-center gap-2 text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20">
-                                                <span className="material-symbols-outlined text-base font-bold">verified</span>
+                                            <div className="absolute top-5 right-5 flex items-center gap-2 text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20">
+                                                <span className="material-symbols-outlined text-sm font-bold">verified</span>
                                             </div>
                                         )}
                                         {(item as any).star && (
-                                            <div className="absolute top-10 right-10 flex items-center gap-2 text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20">
-                                                <span className="material-symbols-outlined text-base font-bold">star</span>
+                                            <div className="absolute top-5 right-5 flex items-center gap-2 text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20">
+                                                <span className="material-symbols-outlined text-sm font-bold">star</span>
                                             </div>
                                         )}
-                                        <div className="relative w-full h-[220px] group-hover:h-[300px] mb-8 flex items-center justify-center transition-all duration-700 overflow-hidden rounded-full flex-shrink-0">
+                                        <div className="relative w-full h-[120px] group-hover:h-[150px] mb-3 flex items-center justify-center transition-all duration-700 overflow-hidden rounded-full flex-shrink-0">
                                             <img
                                                 alt={item.name}
                                                 className="w-full h-full object-cover rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.5)] group-hover:shadow-[0_40px_80px_rgba(0,0,0,0.9)] ring-4 ring-white/5 group-hover:ring-primary/25 scale-110 group-hover:scale-125 transition-all duration-700"
@@ -257,25 +257,41 @@ const Menu3D: React.FC<Menu3DProps> = ({
                                             />
                                         </div>
                                         <div className="text-center w-full flex flex-col items-center flex-1">
-                                            <p className="text-[10px] text-primary font-black tracking-[0.4em] uppercase mb-2 opacity-60 group-hover:opacity-100 transition-opacity">{(item as any).subtitle}</p>
-                                            <h4 className="text-4xl group-hover:text-5xl font-bold mb-4 italic font-display transition-all duration-700 leading-tight">{item.name}</h4>
-                                            <p className="text-white/50 group-hover:text-white/80 text-xs group-hover:text-sm leading-relaxed mb-auto font-light transition-all duration-700 max-w-[90%]">{(item as any).description}</p>
-                                            <div className="flex justify-center gap-4 opacity-70 group-hover:opacity-100 transition-opacity pt-6 w-full">
+                                            <p className="text-[8px] text-primary font-black tracking-[0.4em] uppercase mb-1 opacity-60 group-hover:opacity-100 transition-opacity">{(item as any).subtitle}</p>
+                                            <h4 className="text-lg group-hover:text-xl font-bold mb-1 italic font-display transition-all duration-700 leading-tight">{item.name}</h4>
+                                            <p className="text-white/50 group-hover:text-white/80 text-[9px] group-hover:text-[10px] leading-relaxed mb-auto font-light transition-all duration-700 max-w-[90%]">{(item as any).description}</p>
+                                            <div className="flex justify-center gap-1.5 opacity-70 group-hover:opacity-100 transition-opacity pt-3 w-full">
                                                 {(item as any).tags?.map((tag: string) => (
-                                                    <div key={tag} className="text-[9px] text-white/50 border border-white/10 px-3 py-1.5 uppercase font-bold tracking-[0.2em] whitespace-nowrap">{tag}</div>
+                                                    <div key={tag} className="text-[7px] text-white/50 border border-white/10 px-1.5 py-1 uppercase font-bold tracking-[0.2em] whitespace-nowrap">{tag}</div>
                                                 ))}
                                             </div>
                                         </div>
 
-                                        {/* Add to Order Button for Specials - pinned to bottom */}
-                                        <div className="flex-shrink-0 w-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pt-4">
-                                            <button
-                                                onClick={() => addToCart(item.id)}
-                                                className="w-full bg-primary hover:bg-white text-background-dark py-3.5 rounded-xl text-sm font-black uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-3"
-                                            >
-                                                <span className="material-symbols-outlined text-base">add_shopping_cart</span>
-                                                Add to Order {cart[ item.id ] > 0 && <span className="bg-background-dark text-white size-6 rounded-full flex items-center justify-center text-[9px]">{cart[ item.id ]}</span>}
-                                            </button>
+                                        {/* Price and Action Buttons for Specials */}
+                                        <div className="flex-shrink-0 w-full pt-3 flex flex-col gap-2 mt-auto">
+                                            <div className="flex items-center justify-between px-1">
+                                                <span className="text-xl font-black text-primary">₹{item.price}</span>
+                                                <div className="flex gap-1">
+                                                    {(item as any).tags?.slice(0, 1).map((tag: string) => (
+                                                        <div key={tag} className="text-[7px] text-white/40 border border-white/10 px-1.5 py-0.5 uppercase font-bold tracking-[0.2em]">{tag}</div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center bg-white/10 rounded-xl border border-primary/20 overflow-hidden shadow-xl shadow-black/20">
+                                                <button
+                                                    onClick={() => addToCart(item.id)}
+                                                    className="flex-[1.5] bg-primary hover:bg-white text-background-dark py-2 text-[10px] font-black uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-2 border-r border-background-dark/20"
+                                                >
+                                                    <span className="material-symbols-outlined text-sm">add</span>
+                                                    Add {cart[ item.id ] > 0 && <span className="bg-background-dark text-white size-4 rounded-full flex items-center justify-center text-[8px] ml-0.5">{cart[ item.id ]}</span>}
+                                                </button>
+                                                <button
+                                                    onClick={() => setSelectedDish(item)}
+                                                    className="flex-1 text-white/80 hover:bg-white/10 hover:text-white py-2 text-[10px] font-black uppercase tracking-[0.3em] transition-all flex items-center justify-center"
+                                                >
+                                                    Detail
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -292,13 +308,13 @@ const Menu3D: React.FC<Menu3DProps> = ({
                     </div>
 
                     {/* Entire Menu Section with AI Sidebar */}
-                    <div id="entire-menu" className="relative z-10 w-full px-6 lg:px-12 py-32 bg-background-dark/50 backdrop-blur-2xl border-t border-white/5 mt-20">
+                    <div id="entire-menu" className="relative z-10 w-full px-4 lg:px-2 pt-12 pb-32 bg-background-dark/50 backdrop-blur-2xl border-t border-white/5 mt-6">
                         <div className="w-full mx-auto">
                             <div className="flex flex-col lg:flex-row gap-16">
 
                                 {/* Left: Main Menu Grid */}
                                 <div className="flex-1">
-                                    <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                                    <div className="flex flex-col lg:flex-row lg:items-end justify-start mb-10 gap-6 lg:gap-4">
                                         <div className="flex items-center gap-4">
                                             <button
                                                 onClick={onBack}
@@ -319,7 +335,7 @@ const Menu3D: React.FC<Menu3DProps> = ({
                                                 <h3 className="text-6xl font-bold font-display text-white/90">THE MENU</h3>
                                             </div>
                                         </div>
-                                        <div className="flex gap-4 border-b border-white/10 pb-2 flex-wrap">
+                                        <div className="flex gap-6 border-b border-white/10 pb-2 flex-nowrap overflow-x-auto no-scrollbar scroll-smooth">
                                             {[ 'All', 'Appetizers', 'Main', 'Stews', 'Drinks' ].map(cat => (
                                                 <button
                                                     key={cat}
@@ -332,42 +348,40 @@ const Menu3D: React.FC<Menu3DProps> = ({
                                         </div>
                                     </div>
 
-                                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4">
+                                    <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3 mt-6">
                                         {filteredMenu.map((item) => (
-                                            <div key={item.id} className="group relative bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 border-l-4 hover:border-l-primary hover:border-primary/30 rounded-r-xl rounded-l-none p-2 transition-all duration-500">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="relative size-16 flex-none rounded-lg overflow-hidden shadow-2xl group-hover:scale-105 transition-transform duration-500 ring-1 ring-white/10 group-hover:ring-primary/50">
-                                                        <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
-                                                        <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer" onClick={() => addToCart(item.id)}>
-                                                            <span className="material-symbols-outlined text-white text-base">add_shopping_cart</span>
+                                            <div key={item.id} className="group relative bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 border-b-2 hover:border-b-primary hover:border-primary/30 rounded-xl p-3 transition-all duration-500 flex flex-col gap-3">
+                                                <div className="relative w-full aspect-video rounded-lg overflow-hidden shadow-2xl group-hover:scale-[1.02] transition-transform duration-500 ring-1 ring-white/10 group-hover:ring-primary/50">
+                                                    <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                                                    <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer" onClick={() => addToCart(item.id)}>
+                                                        <span className="material-symbols-outlined text-white text-base">add</span>
+                                                    </div>
+                                                </div>
+                                                <div className="flex-1 flex flex-col gap-2">
+                                                    <div className="flex items-start justify-between gap-1.5">
+                                                        <h4 className="text-[12px] font-bold text-white/90 group-hover:text-primary transition-colors leading-tight min-h-[2em]">{item.name}</h4>
+                                                        <div className={`border ${(item as any).isVeg ? 'border-green-500' : 'border-red-500'} size-2.5 p-[0.5px] flex items-center justify-center rounded-[1px] flex-none mt-0.5`}>
+                                                            <div className={`size-1 rounded-full ${(item as any).isVeg ? 'bg-green-500' : 'bg-red-500'}`}></div>
                                                         </div>
                                                     </div>
-                                                    <div className="flex-1 min-w-0">
-                                                        <div className="flex items-center justify-between mb-0.5 gap-2">
-                                                            <div className="flex items-center gap-1.5 truncate">
-                                                                <h4 className="text-sm font-bold text-white/90 group-hover:text-primary transition-colors truncate">{item.name}</h4>
-                                                                <div className={`border ${(item as any).isVeg ? 'border-green-500' : 'border-red-500'} size-2.5 p-[1px] flex items-center justify-center rounded-[1px] flex-none`}>
-                                                                    <div className={`size-1 rounded-full ${(item as any).isVeg ? 'bg-green-500' : 'bg-red-500'}`}></div>
-                                                                </div>
-                                                            </div>
-                                                            <span className="text-xs font-black text-primary flex-none">₹{item.price}</span>
-                                                        </div>
-                                                        <p className="text-[7px] text-white/40 uppercase tracking-widest mb-1.5">{item.category}</p>
-                                                        <div className="mt-1 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-1 group-hover:translate-y-0 relative z-10">
-                                                            <button
-                                                                onClick={() => addToCart(item.id)}
-                                                                className="flex items-center gap-1 text-[8px] font-black uppercase tracking-tighter bg-primary text-background-dark px-2 py-1 rounded-sm hover:brightness-110 active:scale-95 transition-all shadow-lg"
-                                                            >
-                                                                <span className="material-symbols-outlined text-[12px]">add_shopping_cart</span>
-                                                                Add {cart[ item.id ] > 0 && <span className="bg-background-dark text-white px-1 rounded-full ml-1">{cart[ item.id ]}</span>}
-                                                            </button>
-                                                            <button
-                                                                onClick={() => setSelectedDish(item)}
-                                                                className="text-[8px] font-black uppercase tracking-widest border border-white/20 text-white/60 px-2 py-1 rounded-sm hover:bg-white/10 hover:text-white transition-all flex items-center justify-center"
-                                                            >
-                                                                Details
-                                                            </button>
-                                                        </div>
+                                                    <div className="flex items-center justify-between">
+                                                        <span className="text-[11px] font-black text-primary">₹{item.price}</span>
+                                                        <span className="text-[7px] text-white/30 uppercase tracking-widest">{item.category}</span>
+                                                    </div>
+                                                    <div className="mt-auto flex items-center bg-white/10 rounded-lg border border-primary/20 overflow-hidden relative z-10 w-full shadow-lg shadow-black/20">
+                                                        <button
+                                                            onClick={() => addToCart(item.id)}
+                                                            className="flex-[1.2] flex items-center justify-center gap-1.5 px-2 py-2 text-[8px] font-black uppercase tracking-tighter bg-primary text-background-dark hover:brightness-110 active:scale-95 transition-all border-r border-background-dark/20"
+                                                        >
+                                                            <span className="material-symbols-outlined text-[14px]">add</span>
+                                                            Add {cart[ item.id ] > 0 && <span className="bg-background-dark text-white px-1 rounded-full text-[7px] ml-0.5">{cart[ item.id ]}</span>}
+                                                        </button>
+                                                        <button
+                                                            onClick={() => setSelectedDish(item)}
+                                                            className="flex-1 px-2 py-2 text-[8px] font-black uppercase tracking-widest text-white/80 hover:bg-white/10 hover:text-white transition-all flex items-center justify-center"
+                                                        >
+                                                            Detail
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -376,38 +390,35 @@ const Menu3D: React.FC<Menu3DProps> = ({
                                 </div>
 
                                 {/* Right: AI Recommendation Sidebar */}
-                                <div className="w-full lg:w-[400px] flex flex-col gap-10">
+                                <div className="w-full lg:w-[320px] flex flex-col gap-8">
                                     {/* AI Recommendation Widget */}
-                                    <div className="bg-primary/5 border border-primary/20 rounded-3xl p-8 relative overflow-hidden group cursor-pointer hover:bg-primary/10 transition-all duration-500" onClick={() => onOpenAI()}>
-                                        <div className="absolute top-0 right-0 p-4">
-                                            <span className="flex size-3">
+                                    <div className="bg-primary/10 border-2 border-primary/40 rounded-2xl p-5 relative overflow-hidden group cursor-pointer hover:bg-primary/20 transition-all duration-500 shadow-[0_20px_50px_rgba(238,189,43,0.1)]" onClick={() => onOpenAI()}>
+                                        <div className="absolute top-0 right-0 p-3">
+                                            <span className="flex size-2.5">
                                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                                                <span className="relative inline-flex rounded-full size-3 bg-primary"></span>
+                                                <span className="relative inline-flex rounded-full size-2.5 bg-primary"></span>
                                             </span>
                                         </div>
                                         <div className="relative z-10">
-                                            <div className="flex items-center gap-3 mb-6">
-                                                <span className="material-symbols-outlined text-primary text-2xl">neurology</span>
-                                                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Hanok AI Picks</span>
+                                            <div className="flex items-center gap-3 mb-4">
+                                                <span className="material-symbols-outlined text-primary text-2xl">auto_awesome</span>
+                                                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Neural Concierge</span>
                                             </div>
                                             <div className="mb-6">
-                                                <h5 className="text-2xl font-bold text-white mb-2">Get Personalized Recommendations</h5>
-                                                <p className="text-[11px] text-white/60 leading-relaxed">Answer 4 quick questions and let our AI recommend the perfect dishes for your mood and preferences.</p>
+                                                <h5 className="text-xl font-bold text-white mb-2 font-display italic tracking-wide">GET PERSONALIZED PICKS</h5>
+                                                <p className="text-[11px] text-white/70 leading-relaxed">Answer 4 quick questions and let our AI recommend the perfect dishes.</p>
                                             </div>
                                             <button
-                                                className="w-full bg-primary/10 border border-primary/30 hover:bg-primary hover:text-background-dark text-primary py-3 rounded-xl text-[10px] font-black uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-2"
+                                                className="w-full bg-primary text-background-dark hover:bg-white py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-2 shadow-xl shadow-primary/30"
                                             >
-                                                <span className="material-symbols-outlined text-base">psychology</span>
-                                                Take AI Recommendation
+                                                <span className="material-symbols-outlined text-lg">auto_awesome</span>
+                                                Sync Interface
                                             </button>
                                         </div>
-                                        <div className="absolute bottom-[-20%] right-[-10%] opacity-5 group-hover:opacity-10 transition-opacity duration-700">
-                                            <span className="material-symbols-outlined text-[200px]">cognition</span>
+                                        <div className="absolute bottom-[-10%] right-[-10%] opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-700">
+                                            <span className="material-symbols-outlined text-[180px]">cognition</span>
                                         </div>
                                     </div>
-
-
-
                                 </div>
                             </div>
                         </div>

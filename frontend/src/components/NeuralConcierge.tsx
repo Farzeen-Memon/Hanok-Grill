@@ -79,7 +79,7 @@ const NeuralConcierge: React.FC = () => {
                         <div className="ring"></div>
                         <div className="ring"></div>
                     </div>
-                    <span className="material-symbols-outlined">psychology</span>
+                    <span className="material-symbols-outlined">auto_awesome</span>
                     <span className="toggle-label">AI Concierge</span>
                 </button>
             )}
@@ -89,7 +89,7 @@ const NeuralConcierge: React.FC = () => {
                 <div className="concierge-window">
                     <div className="concierge-header">
                         <div className="concierge-header-info">
-                            <span className="material-symbols-outlined concierge-header-icon">neurology</span>
+                    <span className="material-symbols-outlined concierge-header-icon">auto_awesome</span>
                             <div>
                                 <h3>Neural Concierge</h3>
                                 <p>Online | AI-Powered Assistance</p>
