@@ -615,3 +615,54 @@
 .ai-modal-container::-webkit-scrollbar-thumb:hover {
     background: rgba(238, 189, 43, 0.5);
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 680px) {
+    .ai-modal-overlay {
+        padding: 0;
+    }
+
+    .ai-modal-container {
+        width: 100%;
+        height: 100%;
+        max-height: 100vh;
+        border-radius: 0;
+        border: none;
+        padding: 4rem 1.5rem 2rem;
+        overflow-y: auto;
+    }
+
+    .ai-modal-close {
+        top: 1rem;
+        left: 1rem;
+        right: auto;
+        background: transparent;
+        border: none;
+    }
+
+    .ai-results-title {
+        font-size: 1.5rem;
+        letter-spacing: 0.15em;
+    }
+
+    .ai-questions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ai-results-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ai-loading-title {
+        font-size: 1.2rem;
+    }
+
+    .ai-result-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ai-result-btn-add {
+        justify-content: center;
+    }
+}

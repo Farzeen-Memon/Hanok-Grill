@@ -279,3 +279,48 @@
     background: rgba(238, 189, 43, 0.3);
     border-radius: 10px;
 }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .concierge-toggle {
+        bottom: 20px;
+        right: 20px;
+        width: 55px;
+        height: 55px;
+    }
+
+    .toggle-label {
+        display: none;
+    }
+
+    .concierge-window {
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        animation: window-slide-up 0.3s ease-out;
+    }
+
+    @keyframes window-slide-up {
+        from {
+            transform: translateY(100%);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    .concierge-header {
+        padding: 15px;
+    }
+
+    .concierge-messages {
+        padding: 15px;
+    }
+
+    .concierge-input-area {
+        padding: 15px;
+        padding-bottom: 25px; /* Extra space for home indicators */
+    }
+}

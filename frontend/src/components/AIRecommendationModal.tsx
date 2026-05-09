@@ -84,7 +84,8 @@ const AIRecommendationModal: React.FC<AIRecommendationModalProps> = ({ onClose, 
         <div className="ai-modal-overlay" onClick={onClose}>
             <div className="ai-modal-container" onClick={(e) => e.stopPropagation()}>
                 <button className="ai-modal-close" onClick={onClose}>
-                    <span className="material-symbols-outlined">close</span>
+                    <span className="material-symbols-outlined hidden md:block">close</span>
+                    <span className="material-symbols-outlined md:hidden">arrow_back</span>
                 </button>
 
                 {step === 'questions' && (

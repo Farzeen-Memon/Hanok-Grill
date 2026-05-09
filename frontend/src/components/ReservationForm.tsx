@@ -111,9 +111,9 @@ export default function ReservationForm({ onBack }: ReservationFormProps) {
 
             <div className="relative z-10 flex flex-col h-full w-full max-w-6xl mx-auto p-4">
                 <header className="flex items-center justify-between py-2">
-                    <button onClick={onBack} className="flex items-center gap-2 text-white/40 hover:text-primary transition-colors">
+                    <button onClick={onBack} className="flex items-center gap-1 md:gap-2 text-white/40 hover:text-primary transition-colors">
                         <span className="material-symbols-outlined text-lg">keyboard_backspace</span>
-                        <span className="text-[10px] font-bold uppercase tracking-[0.2em]">Exit</span>
+                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] hidden md:inline">Exit</span>
                     </button>
                     <div className="flex flex-col items-center">
                         <span className="text-white font-display text-sm font-bold tracking-[0.2em] uppercase">Hanok</span>
@@ -121,9 +121,9 @@ export default function ReservationForm({ onBack }: ReservationFormProps) {
                     <div className="w-12"></div>
                 </header>
 
-                <main className="flex-1 flex items-center justify-center py-2 overflow-hidden">
-                    <div className="w-full max-w-3xl bg-white/[0.03] backdrop-blur-2xl border border-white/10 rounded-2xl overflow-hidden shadow-2xl flex flex-row h-[75vh]">
-                        <div className="w-1/3 p-6 bg-primary/5 border-r border-white/5 flex flex-col justify-between">
+                <main className="flex-1 flex items-center justify-center py-2 overflow-hidden px-2 md:px-0">
+                    <div className="w-full max-w-3xl bg-white/[0.03] backdrop-blur-2xl border border-white/10 rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row h-[85vh] md:h-[75vh]">
+                        <div className="w-full md:w-1/3 p-4 md:p-6 bg-primary/5 border-b md:border-b-0 md:border-r border-white/5 flex flex-row md:flex-col justify-between items-center md:items-start">
                             <div>
                                 <h2 className="text-2xl font-bold font-display text-white mb-2">RESERVE</h2>
                                 <p className="text-white/40 text-[10px] leading-relaxed">Secure your culinary journey. Limited seating available.</p>
@@ -134,11 +134,11 @@ export default function ReservationForm({ onBack }: ReservationFormProps) {
                                         <div key={i} className={`h-1 flex-1 rounded-full ${step >= i ? 'bg-primary' : 'bg-white/10'}`}></div>
                                     ))}
                                 </div>
-                                <p className="text-[9px] text-white/30 uppercase tracking-[0.2em]">Step {step} of 2</p>
+                                <p className="text-[9px] text-white/30 uppercase tracking-[0.2em] hidden md:block">Step {step} of 2</p>
                             </div>
                         </div>
 
-                        <div className="w-2/3 p-6 overflow-y-auto custom-scrollbar">
+                        <div className="w-full md:w-2/3 p-4 md:p-6 overflow-y-auto custom-scrollbar">
                             <form onSubmit={handleSubmit} className="space-y-4">
                                 {step === 1 ? (
                                     <div className="space-y-4 animate-fadeIn">

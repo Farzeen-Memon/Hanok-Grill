@@ -96,7 +96,8 @@ const NeuralConcierge: React.FC = () => {
                             </div>
                         </div>
                         <button className="concierge-close" onClick={() => setIsOpen(false)}>
-                            <span className="material-symbols-outlined">close</span>
+                            <span className="material-symbols-outlined hidden md:block">close</span>
+                            <span className="material-symbols-outlined md:hidden">arrow_back</span>
                         </button>
                     </div>
 

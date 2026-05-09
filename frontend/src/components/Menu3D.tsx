@@ -133,7 +133,7 @@ const Menu3D: React.FC<Menu3DProps> = ({
             {/* Main Container */}
             <div className="relative z-10 flex flex-col h-screen">
                 {/* Header - Now Sticky */}
-                <header className="sticky top-0 z-50 flex items-center justify-between px-10 py-3 border-b border-white/5 backdrop-blur-xl bg-background-dark/80">
+                <header className="sticky top-0 z-50 flex items-center justify-between px-4 md:px-10 py-3 border-b border-white/5 backdrop-blur-xl bg-background-dark/80">
                     <div className="flex items-center gap-10">
                         <button
                             onClick={onBack}
@@ -150,7 +150,7 @@ const Menu3D: React.FC<Menu3DProps> = ({
                                     <path d="M50 25C50 25 45 35 45 45C45 55 50 65 50 65C50 65 55 55 55 45C55 35 50 25 50 25Z" fill="currentColor"></path>
                                 </svg>
                             </div>
-                            <div className="flex flex-col leading-none">
+                            <div className="flex flex-col leading-none hidden xs:flex">
                                 <span className="text-white font-display text-sm font-bold tracking-[0.2em] uppercase">Hanok</span>
                                 <span className="text-primary font-display text-[7px] tracking-[0.4em] uppercase font-bold">Grill</span>
                             </div>
@@ -208,9 +208,9 @@ const Menu3D: React.FC<Menu3DProps> = ({
 
                     {/* Specials Section */}
                     <div className="relative z-10 w-full mb-32 specials-section">
-                        <div className="text-center mb-2">
-                            <span className="text-primary font-black text-[12px] tracking-[0.5em] uppercase mb-2 block font-display">Premium Curation</span>
-                            <h2 className="text-5xl font-bold font-display tracking-tight text-white/90">OUR SPECIALS</h2>
+                        <div className="text-center mb-6 md:mb-2 px-4">
+                            <span className="text-primary font-black text-[10px] md:text-[12px] tracking-[0.5em] uppercase mb-2 block font-display">Premium Curation</span>
+                            <h2 className="text-3xl md:text-5xl font-bold font-display tracking-tight text-white/90 uppercase">Our Specials</h2>
                         </div>
 
                         {/* Navigation Arrows */}
@@ -233,7 +233,7 @@ const Menu3D: React.FC<Menu3DProps> = ({
 
                         <div
                             ref={scrollRef}
-                            className="flex overflow-x-auto no-scrollbar gap-8 pb-20 pt-4 px-12 items-center overflow-y-visible"
+                            className="flex overflow-x-auto no-scrollbar gap-4 md:gap-8 pb-12 md:pb-20 pt-4 px-4 md:px-12 items-center overflow-y-visible"
                         >
                             {fullMenu.filter(item => item.category !== 'Drinks').map((item) => (
                                 <div key={item.id} className="relative flex-none group transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]">
@@ -314,7 +314,7 @@ const Menu3D: React.FC<Menu3DProps> = ({
 
                                 {/* Left: Main Menu Grid */}
                                 <div className="flex-1">
-                                    <div className="flex flex-col lg:flex-row lg:items-end justify-start mb-10 gap-6 lg:gap-4">
+                                    <div className="flex flex-col lg:flex-row lg:items-end justify-start mb-6 md:mb-10 gap-6 lg:gap-4 px-2 md:px-0">
                                         <div className="flex items-center gap-4">
                                             <button
                                                 onClick={onBack}
@@ -330,9 +330,9 @@ const Menu3D: React.FC<Menu3DProps> = ({
                                             >
                                                 <span className="material-symbols-outlined text-3xl group-hover:-translate-y-1 transition-transform">keyboard_arrow_up</span>
                                             </button>
-                                            <div>
-                                                <span className="text-primary font-black text-[10px] tracking-[0.5em] uppercase mb-4 block">Selection</span>
-                                                <h3 className="text-6xl font-bold font-display text-white/90">THE MENU</h3>
+                                             <div>
+                                                <span className="text-primary font-black text-[10px] tracking-[0.5em] uppercase mb-1 md:mb-4 block">Selection</span>
+                                                <h3 className="text-4xl md:text-6xl font-bold font-display text-white/90 uppercase">The Menu</h3>
                                             </div>
                                         </div>
                                         <div className="flex gap-6 border-b border-white/10 pb-2 flex-nowrap overflow-x-auto no-scrollbar scroll-smooth">
@@ -438,7 +438,8 @@ const Menu3D: React.FC<Menu3DProps> = ({
                     <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onClick={() => setSelectedDish(null)}>
                         <div className="bg-background-dark/95 border border-white/10 rounded-3xl max-w-lg w-full p-8 relative shadow-[0_0_50px_rgba(0,0,0,0.5)] transform animate-in fade-in zoom-in-95 duration-200" onClick={e => e.stopPropagation()}>
                             <button onClick={() => setSelectedDish(null)} className="absolute top-6 right-6 text-white/40 hover:text-white transition-colors">
-                                <span className="material-symbols-outlined text-2xl">close</span>
+                                <span className="material-symbols-outlined text-2xl hidden md:block">close</span>
+                                <span className="material-symbols-outlined text-2xl md:hidden">arrow_back</span>
                             </button>
 
                             <div className="flex flex-col items-center text-center">

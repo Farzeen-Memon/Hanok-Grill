@@ -37,7 +37,7 @@ const HomePage: React.FC<HomePageProps> = ({ onMenu, onReservations, onAI, initi
                 <GrillHeroScene />
 
                 {/* Navigation Bar - Increased z-index and opacity control */}
-                <nav className={`fixed top-0 left-0 w-full z-[1000] px-8 py-3 flex items-center justify-between border-b border-white/5 transition-all duration-500 ${isScrolled ? 'bg-[#080808]/95 backdrop-blur-3xl py-2' : 'glassmorphism'}`}>
+                <nav className={`fixed top-0 left-0 w-full z-[1000] px-4 md:px-8 py-3 flex items-center justify-between border-b border-white/5 transition-all duration-500 ${isScrolled ? 'bg-[#080808]/95 backdrop-blur-3xl py-2' : 'glassmorphism'}`}>
                     <div className="flex items-center gap-4 group cursor-pointer">
                         <div className="relative size-6 text-[#eebd2b] opacity-90 transition-opacity group-hover:opacity-100">
                             <svg className="w-full h-full" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -74,7 +74,7 @@ const HomePage: React.FC<HomePageProps> = ({ onMenu, onReservations, onAI, initi
                 </nav>
 
                 {/* Main Content — Now Aligned Left in the black space */}
-                <main className="relative z-20 flex-1 flex flex-col justify-center items-start text-left px-[10vw] pt-[12vh] pb-16" style={{ maxWidth: '80%' }}>
+                <main className="relative z-20 flex-1 flex flex-col justify-center items-start text-left px-6 md:px-[10vw] pt-[10vh] md:pt-[12vh] pb-16 w-full md:max-w-[80%]">
                     <div className="space-y-6">
                         <p style={{ fontSize: '0.65rem', letterSpacing: '0.7em', color: '#A89C85', textTransform: 'uppercase', fontWeight: 600 }}>
                             Seoul · Established 1826
@@ -111,13 +111,13 @@ const HomePage: React.FC<HomePageProps> = ({ onMenu, onReservations, onAI, initi
                             style={{
                                 display: 'inline-flex',
                                 alignItems: 'center',
-                                gap: '1.2rem',
+                                gap: '1rem',
                                 border: '1px solid rgba(250, 209, 77, 0.4)',
-                                padding: '1.1rem 3.5rem',
+                                padding: '0.9rem 2rem',
                                 background: 'transparent',
                                 color: '#FAD14D',
-                                fontSize: '0.7rem',
-                                letterSpacing: '0.6em',
+                                fontSize: '0.65rem',
+                                letterSpacing: '0.4em',
                                 textTransform: 'uppercase',
                                 fontWeight: 500,
                                 cursor: 'pointer',
@@ -126,14 +126,14 @@ const HomePage: React.FC<HomePageProps> = ({ onMenu, onReservations, onAI, initi
                             }}
                         >
                             <span>Explore Menu</span>
-                            <span className="material-symbols-outlined" style={{ fontSize: '1.2rem', opacity: 0.8 }}>east</span>
+                            <span className="material-symbols-outlined" style={{ fontSize: '1rem', opacity: 0.8 }}>east</span>
                         </button>
                     </div>
                 </main>
 
                 {/* Footer */}
 
-                <footer className="relative z-20 w-full px-12 pb-12 flex items-end justify-between">
+                <footer className="relative z-20 w-full px-6 md:px-12 pb-12 flex items-end justify-between">
                     <div className="hidden lg:flex flex-col gap-6 text-white/30">
                         <a className="hover:text-primary transition-colors flex items-center gap-3 text-[10px] uppercase tracking-widest" href="#">
                             <span className="material-symbols-outlined text-lg">public</span>
@@ -162,18 +162,18 @@ const HomePage: React.FC<HomePageProps> = ({ onMenu, onReservations, onAI, initi
             </header>
 
             {/* History Section */}
-            <section id="history" className="relative min-h-screen w-full bg-[#050505] home-cinematic py-32 px-12 overflow-hidden">
+            <section id="history" className="relative min-h-screen w-full bg-[#050505] home-cinematic py-20 md:py-32 px-6 md:px-12 overflow-hidden">
                 {/* Background Decorative Elements */}
                 <div className="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none">
                     <div className="absolute top-[20%] right-[-10%] writing-vertical-rl text-[120px] font-black tracking-[1em] text-white">우리 역사</div>
                     <div className="absolute bottom-[10%] left-[5%] writing-vertical-rl text-[80px] font-black tracking-[0.5em] text-primary/30">한옥 그릴</div>
                 </div>
 
-                <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-center relative z-10">
-                    <div className="space-y-12">
+                <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-24 items-center relative z-10">
+                    <div className="space-y-8 md:space-y-12">
                         <div className="space-y-4">
                             <span className="text-primary font-black text-xs tracking-[0.6em] uppercase block">Our Heritage</span>
-                            <h2 className="text-6xl md:text-8xl font-bold font-display text-white/90 leading-tight">
+                            <h2 className="text-4xl md:text-8xl font-bold font-display text-white/90 leading-tight">
                                 The Spirit of <br />
                                 <span className="text-primary italic">Hanok</span>
                             </h2>
