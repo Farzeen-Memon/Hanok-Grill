@@ -47,7 +47,7 @@ const HomePage: React.FC<HomePageProps> = ({ onMenu, onReservations, onAI, initi
                             </svg>
                         </div>
                         <div className="flex flex-col leading-none">
-                            <span className="text-[#C9A227] font-display text-base font-bold tracking-[0.35em] uppercase">Hanok</span>
+                            <span className="text-[#FAD14D] font-display text-base font-bold tracking-[0.35em] uppercase">Hanok</span>
                             <span className="text-white/60 font-display text-[8px] tracking-[0.8em] uppercase font-bold mt-1">Grill</span>
                         </div>
                     </div>
@@ -83,10 +83,10 @@ const HomePage: React.FC<HomePageProps> = ({ onMenu, onReservations, onAI, initi
                             className="font-display font-medium leading-tight uppercase"
                             style={{
                                 fontSize: 'clamp(3rem, 7vw, 7.5rem)',
-                                color: '#D4AF37', /* Warm gold #C9A227 + approx 3% brightness boost */
+                                color: '#FAD14D', /* Brighter gold for better visibility */
                                 letterSpacing: '0.35em',
-                                textShadow: 'none',
-                                opacity: 0.98
+                                textShadow: '0 0 30px rgba(250, 209, 77, 0.2)', /* Subtle glow for clarity */
+                                opacity: 1
                             }}
                         >
                             Hanok<br />
